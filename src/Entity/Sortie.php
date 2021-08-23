@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -48,11 +50,6 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $organisateur;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $idLieu;
@@ -61,6 +58,40 @@ class Sortie
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $urlPhoto;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateurDeSortie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="participant")
+     */
+    private $participants;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="siteOrganisateur")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $campus;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="lieuSortie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="etatDeSortie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $etat;
+
+    public function __construct()
+    {
+        $this->participants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,17 +170,6 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateur(): ?string
-    {
-        return $this->organisateur;
-    }
-
-    public function setOrganisateur(string $organisateur): self
-    {
-        $this->organisateur = $organisateur;
-
-        return $this;
-    }
 
     public function getIdLieu(): ?int
     {
@@ -171,6 +191,81 @@ class Sortie
     public function setUrlPhoto(?string $urlPhoto): self
     {
         $this->urlPhoto = $urlPhoto;
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+            $participant->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        if ($this->participants->removeElement($participant)) {
+            $participant->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function getCampus(): ?Campus
+    {
+        return $this->campus;
+    }
+
+    public function setCampus(?Campus $campus): self
+    {
+        $this->campus = $campus;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getEtat(): ?Etat
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?Etat $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

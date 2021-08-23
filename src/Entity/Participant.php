@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ParticipantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,6 +69,22 @@ class Participant
      * @ORM\JoinColumn(nullable=false)
      */
     private $idCampus;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur", orphanRemoval=true)
+     */
+    private $organisateurDeSortie;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="participants")
+     */
+    private $participant;
+
+    public function __construct()
+    {
+        $this->organisateurDeSortie = new ArrayCollection();
+        $this->participant = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -190,6 +208,60 @@ class Participant
     public function setIdCampus(Campus $idCampus): self
     {
         $this->idCampus = $idCampus;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getOrganisateurDeSortie(): Collection
+    {
+        return $this->organisateurDeSortie;
+    }
+
+    public function addOrganisateurDeSortie(Sortie $organisateurDeSortie): self
+    {
+        if (!$this->organisateurDeSortie->contains($organisateurDeSortie)) {
+            $this->organisateurDeSortie[] = $organisateurDeSortie;
+            $organisateurDeSortie->setOrganisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrganisateurDeSortie(Sortie $organisateurDeSortie): self
+    {
+        if ($this->organisateurDeSortie->removeElement($organisateurDeSortie)) {
+            // set the owning side to null (unless already changed)
+            if ($organisateurDeSortie->getOrganisateur() === $this) {
+                $organisateurDeSortie->setOrganisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getParticipant(): Collection
+    {
+        return $this->participant;
+    }
+
+    public function addParticipant(Sortie $participant): self
+    {
+        if (!$this->participant->contains($participant)) {
+            $this->participant[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Sortie $participant): self
+    {
+        $this->participant->removeElement($participant);
 
         return $this;
     }
