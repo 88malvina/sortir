@@ -29,10 +29,7 @@
 
         <main class="container">
             {% block main %}
-            {% if app.user %}
-                <div class="date"><strong>Date du jour: {{ "now"| date('d/m/Y') }}</strong></div>
-                <div class="participant"><strong>Participant:</strong></div>
-            {% endif %}
+
             {% endblock %}
 
             {% block body %}

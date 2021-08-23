@@ -5,15 +5,16 @@
             <p id="name_logo">Sortir.com</p>
         </div>
         <div>
-            {% if app.user %}
-                <a class="a_header" href="{{ path('main') }}" title="Page d'accueil">Accueil</a>
-                <a class="a_header" href="#" title="Gérer les campus">Campus</a>
-                <a class="a_header" href="#" title="Gérer mes informations">Mon profil</a>
-                <a class="a_header" href="#" title="Se déconnecter">Déconnexion</a>
-            {% else %}
-                <a class="a_header" href="{{ path('app_login') }}" title="Login">Login</a>
-                <a class="a_header" href="{{ path('app_register') }}" title="Register">Register</a>
-            {% endif %}
+            {#      {% if app.user %}
+
+            {% endif %}     #}
+
+            <a class="a_header" href="#" title="Page d'accueil">Accueil</a>
+            <a class="a_header" href="#" title="Gérer les villes">Villes</a>
+            <a class="a_header" href="#" title="Gérer les campus">Campus</a>
+            <a class="a_header" href="{{ path('monprofil_afficher') }}" title="Gérer mes informations">Mon profil</a>
+            <a class="a_header" href="#" title="Se déconnecter">Déconnexion</a>
+
         </div>
     </nav>
 </header>
