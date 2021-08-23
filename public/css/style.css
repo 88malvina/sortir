@@ -1,7 +1,93 @@
-header {
-    font-family: 'Source Serif Pro', serif;
-}
 .date, .participant{
     text-align: right;
     padding-right: 50px;
 }
+
+body {
+    background-size: cover;
+    background: linear-gradient(white, #f6aef6) fixed center center;
+    color: lightpink;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Style the top navigation bar */
+.topnav {
+    overflow: hidden;
+    background-color: #592659;
+    display: flex;
+    align-items: center;
+    align-content: end
+}
+
+/* Style the topnav links */
+.topnav a,#name_logo {
+    float: left;
+    display: block;
+    color: #f8c8cf;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+    border-left: #f8c8cf solid thin;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+    background-color: #f8c8cf;
+    color: #f88f9f;
+}
+
+.content {
+    background-color: #ddd;
+    padding: 10px;
+    height: 200px; /* Should be removed. Only for demonstration */
+}
+
+.footer {
+    background-color: #592659;
+    color: #f8c8cf;
+    padding: 10px;
+    text-align: center;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 35px;
+}
+
+#logo_header:hover{
+    background-color: inherit;
+}
+
+#logo_header,#name_logo {
+    border: none;
+}
+
+#name_logo {
+    color: #f8c8cf;
+    margin: 9px 25px 5px 0px;
+    font-size: 3rem;
+    font-family: 'Source Serif Pro', serif;
+}
+
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body > .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: auto;
+}
+
+
+header {
+    font-family: 'Quicksand', sans-serif;
+}
+
+

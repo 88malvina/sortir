@@ -1,31 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a href="{{ path('main') }}"><img src="{{ asset('img/sortir.jpg') }}" alt=logo" width="100px"></a>
-    <a class="navbar-brand" href="{{ path('main') }}">Sortir.com</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<header>
+    <nav class="topnav">
+        <div id="logo_and_name">
+            <a id="logo_header" href="{{ path('main') }}"><img src="{{ asset('img/sortir.jpg') }}" alt=logo" width="100px"></a>
+            <p id="name_logo">Sortir.com</p>
+        </div>
+        <div>
+            {#      {% if app.user %}
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-           {% if app.user %}
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ path('main') }}">Villes <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Campus</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('main') }}">Accueil
-                </a>
+            {% endif %}     #}
 
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Mon Profil</a>
-            </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Se deconnecter</a>
-                </li>
-           {% endif %}
-        </ul>
-    </div>
-</nav>
+            <a class="a_header" href="#" title="Page d'accueil">Accueil</a>
+            <a class="a_header" href="#" title="Gérer les villes">Villes</a>
+            <a class="a_header" href="#" title="Gérer les campus">Campus</a>
+            <a class="a_header" href="#" title="Gérer mes informations">Mon profil</a>
+            <a class="a_header" href="#" title="Se déconnecter">Déconnexion</a>
+
+        </div>
+    </nav>
+</header>
