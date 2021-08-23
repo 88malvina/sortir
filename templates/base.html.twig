@@ -12,6 +12,7 @@
             <link rel="stylesheet" href="{{ asset('css/style.css') }}">
             <link rel="preconnect" href="https://fonts.googleapis.com">
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@1,300&display=swap" rel="stylesheet">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         {% endblock %}
@@ -20,19 +21,22 @@
             {#{{ encore_entry_script_tags('app') }}#}
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         {% endblock %}
+
+        <link rel="icon" href="{{ asset('img/sortir.png') }}">
     </head>
     <body>
-    <header>
         {% include('inc/nav.html.twig') %}
-    </header>
-    <main>
-        {% block main %}
-        {% if app.user %}
-            <div class="date"><strong>Date du jour: {{ "now"| date('d/m/Y') }}</strong></div>
-            <div class="participant"><strong>Participant:</strong></div>
-        {% endif %}
-        {% endblock %}
-    </main>
-        {% block body %}{% endblock %}
+
+        <main class="container">
+            {% block main %}
+            {% if app.user %}
+                <div class="date"><strong>Date du jour: {{ "now"| date('d/m/Y') }}</strong></div>
+                <div class="participant"><strong>Participant:</strong></div>
+            {% endif %}
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            <p>&copy; Sortir.com {{ "now"|date("Y") }}</p>
+        </footer>
     </body>
 </html>
