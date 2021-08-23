@@ -57,6 +57,11 @@ class Participant
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $idCampus;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -154,6 +159,18 @@ class Participant
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getIdCampus(): ?int
+    {
+        return $this->idCampus;
+    }
+
+    public function setIdCampus(int $idCampus): self
+    {
+        $this->idCampus = $idCampus;
 
         return $this;
     }
