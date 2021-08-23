@@ -30,13 +30,13 @@ class Ville
     private $cp;
 
     /**
-     * @ORM\OneToMany(targetEntity=Lieu::class, mappedBy="ville", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Lieu::class, mappedBy="ville")
      */
-    private $lieuDeSortie;
+    private $lieux;
 
     public function __construct()
     {
-        $this->lieuDeSortie = new ArrayCollection();
+        $this->lieux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,27 +71,27 @@ class Ville
     /**
      * @return Collection|Lieu[]
      */
-    public function getLieuDeSortie(): Collection
+    public function getLieux(): Collection
     {
-        return $this->lieuDeSortie;
+        return $this->lieux;
     }
 
-    public function addLieuDeSortie(Lieu $lieuDeSortie): self
+    public function addLieux(Lieu $lieux): self
     {
-        if (!$this->lieuDeSortie->contains($lieuDeSortie)) {
-            $this->lieuDeSortie[] = $lieuDeSortie;
-            $lieuDeSortie->setVille($this);
+        if (!$this->lieux->contains($lieux)) {
+            $this->lieux[] = $lieux;
+            $lieux->setVille($this);
         }
 
         return $this;
     }
 
-    public function removeLieuDeSortie(Lieu $lieuDeSortie): self
+    public function removeLieux(Lieu $lieux): self
     {
-        if ($this->lieuDeSortie->removeElement($lieuDeSortie)) {
+        if ($this->lieux->removeElement($lieux)) {
             // set the owning side to null (unless already changed)
-            if ($lieuDeSortie->getVille() === $this) {
-                $lieuDeSortie->setVille(null);
+            if ($lieux->getVille() === $this) {
+                $lieux->setVille(null);
             }
         }
 

@@ -49,10 +49,6 @@ class Sortie
      */
     private $infosSortie;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $idLieu;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -60,33 +56,34 @@ class Sortie
     private $urlPhoto;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateurDeSortie")
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sortiesOrganisees")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="participant")
-     */
-    private $participants;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="siteOrganisateur")
+     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
     private $campus;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="lieuSortie")
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="etatDeSortie")
+     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, inversedBy="sorties")
+     */
+    private $participants;
+
 
     public function __construct()
     {
@@ -170,19 +167,6 @@ class Sortie
         return $this;
     }
 
-
-    public function getIdLieu(): ?int
-    {
-        return $this->idLieu;
-    }
-
-    public function setIdLieu(int $idLieu): self
-    {
-        $this->idLieu = $idLieu;
-
-        return $this;
-    }
-
     public function getUrlPhoto(): ?string
     {
         return $this->urlPhoto;
@@ -203,33 +187,6 @@ class Sortie
     public function setOrganisateur(?Participant $organisateur): self
     {
         $this->organisateur = $organisateur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Participant[]
-     */
-    public function getParticipants(): Collection
-    {
-        return $this->participants;
-    }
-
-    public function addParticipant(Participant $participant): self
-    {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-            $participant->addParticipant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipant(Participant $participant): self
-    {
-        if ($this->participants->removeElement($participant)) {
-            $participant->removeParticipant($this);
-        }
 
         return $this;
     }
@@ -266,6 +223,30 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getParticipants(): Collection
+    {
+        return $this->participants;
+    }
+
+    public function addParticipant(Participant $participant): self
+    {
+        if (!$this->participants->contains($participant)) {
+            $this->participants[] = $participant;
+        }
+
+        return $this;
+    }
+
+    public function removeParticipant(Participant $participant): self
+    {
+        $this->participants->removeElement($participant);
 
         return $this;
     }

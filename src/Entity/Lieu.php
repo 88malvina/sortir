@@ -40,24 +40,21 @@ class Lieu
     private $longitude;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieu")
      */
-    private $id_ville;
+    private $sorties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="lieu", orphanRemoval=true)
-     */
-    private $lieuSortie;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieuDeSortie")
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ville;
 
+
     public function __construct()
     {
         $this->lieuSortie = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -113,42 +110,30 @@ class Lieu
         return $this;
     }
 
-    public function getIdVille(): ?string
-    {
-        return $this->id_ville;
-    }
-
-    public function setIdVille(string $id_ville): self
-    {
-        $this->id_ville = $id_ville;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Sortie[]
      */
-    public function getLieuSortie(): Collection
+    public function getSorties(): Collection
     {
-        return $this->lieuSortie;
+        return $this->sorties;
     }
 
-    public function addLieuSortie(Sortie $lieuSortie): self
+    public function addSorty(Sortie $sorty): self
     {
-        if (!$this->lieuSortie->contains($lieuSortie)) {
-            $this->lieuSortie[] = $lieuSortie;
-            $lieuSortie->setLieu($this);
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setLieu($this);
         }
 
         return $this;
     }
 
-    public function removeLieuSortie(Sortie $lieuSortie): self
+    public function removeSorty(Sortie $sorty): self
     {
-        if ($this->lieuSortie->removeElement($lieuSortie)) {
+        if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($lieuSortie->getLieu() === $this) {
-                $lieuSortie->setLieu(null);
+            if ($sorty->getLieu() === $this) {
+                $sorty->setLieu(null);
             }
         }
 
@@ -166,4 +151,5 @@ class Lieu
 
         return $this;
     }
+
 }

@@ -25,14 +25,15 @@ class Etat
     private $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="etat", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="etat")
      */
-    private $etatDeSortie;
+    private $sorties;
 
     public function __construct()
     {
-        $this->etatDeSortie = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -54,30 +55,32 @@ class Etat
     /**
      * @return Collection|Sortie[]
      */
-    public function getEtatDeSortie(): Collection
+    public function getSorties(): Collection
     {
-        return $this->etatDeSortie;
+        return $this->sorties;
     }
 
-    public function addEtatDeSortie(Sortie $etatDeSortie): self
+    public function addSorty(Sortie $sorty): self
     {
-        if (!$this->etatDeSortie->contains($etatDeSortie)) {
-            $this->etatDeSortie[] = $etatDeSortie;
-            $etatDeSortie->setEtat($this);
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setEtat($this);
         }
 
         return $this;
     }
 
-    public function removeEtatDeSortie(Sortie $etatDeSortie): self
+    public function removeSorty(Sortie $sorty): self
     {
-        if ($this->etatDeSortie->removeElement($etatDeSortie)) {
+        if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($etatDeSortie->getEtat() === $this) {
-                $etatDeSortie->setEtat(null);
+            if ($sorty->getEtat() === $this) {
+                $sorty->setEtat(null);
             }
         }
 
         return $this;
     }
+
+
 }

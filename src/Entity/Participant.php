@@ -65,26 +65,21 @@ class Participant
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity=Campus::class, inversedBy="idParticipant", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur")
      */
-    private $idCampus;
+    private $sortiesOrganisees;
 
     /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="organisateur", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="participants")
      */
-    private $organisateurDeSortie;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="participants")
-     */
-    private $participant;
+    private $sorties;
 
     public function __construct()
     {
-        $this->organisateurDeSortie = new ArrayCollection();
-        $this->participant = new ArrayCollection();
+        $this->sortiesOrganisees = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
+
 
 
     public function getId(): ?int
@@ -200,42 +195,30 @@ class Participant
         return $this;
     }
 
-    public function getIdCampus(): ?Campus
-    {
-        return $this->idCampus;
-    }
-
-    public function setIdCampus(Campus $idCampus): self
-    {
-        $this->idCampus = $idCampus;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Sortie[]
      */
-    public function getOrganisateurDeSortie(): Collection
+    public function getSortiesOrganisees(): Collection
     {
-        return $this->organisateurDeSortie;
+        return $this->sortiesOrganisees;
     }
 
-    public function addOrganisateurDeSortie(Sortie $organisateurDeSortie): self
+    public function addSortiesOrganisee(Sortie $sortiesOrganisee): self
     {
-        if (!$this->organisateurDeSortie->contains($organisateurDeSortie)) {
-            $this->organisateurDeSortie[] = $organisateurDeSortie;
-            $organisateurDeSortie->setOrganisateur($this);
+        if (!$this->sortiesOrganisees->contains($sortiesOrganisee)) {
+            $this->sortiesOrganisees[] = $sortiesOrganisee;
+            $sortiesOrganisee->setOrganisateur($this);
         }
 
         return $this;
     }
 
-    public function removeOrganisateurDeSortie(Sortie $organisateurDeSortie): self
+    public function removeSortiesOrganisee(Sortie $sortiesOrganisee): self
     {
-        if ($this->organisateurDeSortie->removeElement($organisateurDeSortie)) {
+        if ($this->sortiesOrganisees->removeElement($sortiesOrganisee)) {
             // set the owning side to null (unless already changed)
-            if ($organisateurDeSortie->getOrganisateur() === $this) {
-                $organisateurDeSortie->setOrganisateur(null);
+            if ($sortiesOrganisee->getOrganisateur() === $this) {
+                $sortiesOrganisee->setOrganisateur(null);
             }
         }
 
@@ -245,23 +228,26 @@ class Participant
     /**
      * @return Collection|Sortie[]
      */
-    public function getParticipant(): Collection
+    public function getSorties(): Collection
     {
-        return $this->participant;
+        return $this->sorties;
     }
 
-    public function addParticipant(Sortie $participant): self
+    public function addSorty(Sortie $sorty): self
     {
-        if (!$this->participant->contains($participant)) {
-            $this->participant[] = $participant;
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->addParticipant($this);
         }
 
         return $this;
     }
 
-    public function removeParticipant(Sortie $participant): self
+    public function removeSorty(Sortie $sorty): self
     {
-        $this->participant->removeElement($participant);
+        if ($this->sorties->removeElement($sorty)) {
+            $sorty->removeParticipant($this);
+        }
 
         return $this;
     }

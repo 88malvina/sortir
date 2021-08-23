@@ -25,19 +25,15 @@ class Campus
     private $nom;
 
     /**
-     * @ORM\OneToOne(targetEntity=Participant::class, mappedBy="idCampus", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus")
      */
-    private $idParticipant;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="campus", orphanRemoval=true)
-     */
-    private $siteOrganisateur;
+    private $sorties;
 
     public function __construct()
     {
-        $this->siteOrganisateur = new ArrayCollection();
+        $this->sorties = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -56,50 +52,35 @@ class Campus
         return $this;
     }
 
-    public function getIdParticipant(): ?Participant
-    {
-        return $this->idParticipant;
-    }
-
-    public function setIdParticipant(Participant $idParticipant): self
-    {
-        // set the owning side of the relation if necessary
-        if ($idParticipant->getIdCampus() !== $this) {
-            $idParticipant->setIdCampus($this);
-        }
-
-        $this->idParticipant = $idParticipant;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Sortie[]
      */
-    public function getSiteOrganisateur(): Collection
+    public function getSorties(): Collection
     {
-        return $this->siteOrganisateur;
+        return $this->sorties;
     }
 
-    public function addSiteOrganisateur(Sortie $siteOrganisateur): self
+    public function addSorty(Sortie $sorty): self
     {
-        if (!$this->siteOrganisateur->contains($siteOrganisateur)) {
-            $this->siteOrganisateur[] = $siteOrganisateur;
-            $siteOrganisateur->setCampus($this);
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->setCampus($this);
         }
 
         return $this;
     }
 
-    public function removeSiteOrganisateur(Sortie $siteOrganisateur): self
+    public function removeSorty(Sortie $sorty): self
     {
-        if ($this->siteOrganisateur->removeElement($siteOrganisateur)) {
+        if ($this->sorties->removeElement($sorty)) {
             // set the owning side to null (unless already changed)
-            if ($siteOrganisateur->getCampus() === $this) {
-                $siteOrganisateur->setCampus(null);
+            if ($sorty->getCampus() === $this) {
+                $sorty->setCampus(null);
             }
         }
 
         return $this;
     }
+
+
 }
