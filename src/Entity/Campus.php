@@ -22,6 +22,11 @@ class Campus
      */
     private $nom;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Participant::class, mappedBy="idCampus", cascade={"persist", "remove"})
+     */
+    private $idParticipant;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -35,6 +40,23 @@ class Campus
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getIdParticipant(): ?Participant
+    {
+        return $this->idParticipant;
+    }
+
+    public function setIdParticipant(Participant $idParticipant): self
+    {
+        // set the owning side of the relation if necessary
+        if ($idParticipant->getIdCampus() !== $this) {
+            $idParticipant->setIdCampus($this);
+        }
+
+        $this->idParticipant = $idParticipant;
 
         return $this;
     }

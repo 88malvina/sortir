@@ -63,9 +63,11 @@ class Participant
     private $image;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity=Campus::class, inversedBy="idParticipant", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $idCampus;
+
 
     public function getId(): ?int
     {
@@ -180,15 +182,16 @@ class Participant
         return $this;
     }
 
-    public function getIdCampus(): ?int
+    public function getIdCampus(): ?Campus
     {
         return $this->idCampus;
     }
 
-    public function setIdCampus(int $idCampus): self
+    public function setIdCampus(Campus $idCampus): self
     {
         $this->idCampus = $idCampus;
 
         return $this;
     }
+
 }
