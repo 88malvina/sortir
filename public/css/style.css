@@ -1,0 +1,7 @@
+header {
+    font-family: 'Source Serif Pro', serif;
+}
+.date, .participant{
+    text-align: right;
+    padding-right: 50px;
+}
