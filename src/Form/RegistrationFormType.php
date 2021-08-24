@@ -43,7 +43,6 @@ class RegistrationFormType extends AbstractType
             ->add('pseudo')
             ->add('telephone')
             ->add('campus',EntityType::class,[
-                'label' => 'Campus',
                 'class' => Campus::class,
                 'choice_label' => 'nom'
             ])
