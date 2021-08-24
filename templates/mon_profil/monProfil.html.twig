@@ -6,6 +6,7 @@ Mon Profil
 
 {% block main %}
         <h2>Mon profil</h2>
+        <div class="profil">
         <div class="photoProfil"></div>
         {{ form_start(profilForm) }}
         {{ form_widget(profilForm) }}
@@ -13,5 +14,6 @@ Mon Profil
         <button type="submit">Enregistrer</button>
         <button type="reset">Annuler</button>
         {{ form_end(profilForm) }}
+        </div>
 {% endblock %}
 
