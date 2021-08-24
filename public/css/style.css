@@ -89,5 +89,26 @@ body > .container {
 header {
     font-family: 'Quicksand', sans-serif;
 }
+label{
+    display: block;
+    margin-right: 80px;
+    width: 80px;
+}
+input {
+    width : 200px;
+    margin: 0;
 
+    -webkit-box-sizing: border-box; /* Pour les anciennes versions des navigateurs WebKit */
+    -moz-box-sizing: border-box; /* Pour tous les navigateurs Gecko */
+    box-sizing: border-box;
+}
+.photoProfil{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+button{
+    margin-top: 50px;
+}
 
