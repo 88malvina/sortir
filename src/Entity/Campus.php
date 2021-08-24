@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-//avec modification professeur
+//avec modification professeur v2
 /**
  * @ORM\Entity(repositoryClass=CampusRepository::class)
  */
