@@ -2,6 +2,15 @@
 
 {% block title %}Sortir.com{% endblock %}
 {% block main %}
+
+<h2> Filtrer les sorties </h2>
+    {{ form_start(sortieForm) }}
+    {{ form_widget(sortieForm) }}
+
+    <button type="submit">Enregistrer</button>
+    <button type="reset">Annuler</button>
+    {{ form_end(sortieForm) }}
+
 <h2> Liste des sorties </h2>
 
 <!-- On commence par mettre en place la première ligne du tableau pour l'affichage -->
