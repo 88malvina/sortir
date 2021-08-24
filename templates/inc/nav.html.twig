@@ -5,15 +5,26 @@
             <p id="name_logo">Sortir.com</p>
         </div>
         <div>
-            {#      {% if app.user %}
-
-            {% endif %}     #}
-
-            <a class="a_header" href="#" title="Page d'accueil">Accueil</a>
-            <a class="a_header" href="#" title="Gérer les villes">Villes</a>
-            <a class="a_header" href="#" title="Gérer les campus">Campus</a>
-            <a class="a_header" href="{{ path('monprofil_afficher') }}" title="Gérer mes informations">Mon profil</a>
-            <a class="a_header" href="#" title="Se déconnecter">Déconnexion</a>
+            <header>
+                <nav class="topnav">
+                    <div id="logo_and_name">
+                        <a id="logo_header" href="{{ path('main') }}"><img src="{{ asset('img/sortir.jpg') }}" alt=logo" width="100px"></a>
+                        <p id="name_logo">Sortir.com</p>
+                    </div>
+                    <div>
+                        {% if app.user %}
+                            <a class="a_header" href="{{ path('main') }}" title="Page d'accueil">Accueil</a>
+                            <a class="a_header" href="#" title="Gérer les villes">Villes</a>
+                            <a class="a_header" href="#" title="Gérer les campus">Campus</a>
+                            <a class="a_header" href="{{ path('monprofil_afficher') }}" title="Gérer mes informations">Mon profil</a>
+                            <a class="a_header" href="{{ path('logout') }}" title="Se déconnecter">Déconnexion</a>
+                        {% else %}
+                            <a class="a_header" href="{{ path('login') }}" title="Login">Login</a>
+                            <a class="a_header" href="{{ path('register') }}" title="Register">Register</a>
+                        {% endif %}
+                    </div>
+                </nav>
+            </header>
 
         </div>
     </nav>
