@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block main %}
+    <h2>{{ pseudo }}</h2>
+
+    <div class="detailsDeMonProfil">
+    <h4>Prènom: {{ prenom }}</h4>
+    <h4>Téléphone: {{ telephone }}</h4>
+    <h4>Email: {{ email }}</h4>
+    <h4>Campus: {{ campus }}</h4>
+        <a href="{{ path('main') }}"><button>Retour</button></a>
+    </div>
+{% endblock %}
+

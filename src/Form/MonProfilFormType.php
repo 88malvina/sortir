@@ -18,7 +18,7 @@ class MonProfilFormType extends AbstractType
     {
         $campus = new Campus();
         $builder
-            ->add('pseudo',TextType::class)
+            ->add('pseudo',TextType::class,['empty_data'=>''])
             ->add('prenom', TextType::class)
             ->add('nom')
             ->add('telephone')
@@ -28,17 +28,7 @@ class MonProfilFormType extends AbstractType
             ->add('image',FileType::class,[
                 'label' => 'Profile image',
                 'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf'
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ],
+                'required' => false
             ])
         ;
     }

@@ -117,6 +117,10 @@ input {
 button{
     margin-top: 50px;
 }
+.detailsDeMonProfil{
+    text-align: justify;
+    align-items: center;
+}
 
 
 
