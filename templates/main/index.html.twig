@@ -2,6 +2,65 @@
 
 {% block title %}Sortir.com{% endblock %}
 {% block main %}
+<h2> Liste des sorties </h2>
+
+<!-- On commence par mettre en place la première ligne du tableau pour l'affichage -->
+    <table class="table">
+    <tr>
+        <th>Nom de la Sortie</th>
+        <th>Date de la sortie</th>
+        <th>Cloture</th>
+        <th>Inscrits / places</th>
+        <th>Etat</th>
+        <th>Je suis inscrit</th>
+        <th>Organisateur</th>
+        <th>Action</th>
+    </tr>
+
+<!-- Ensuite on va boucler sur le tableau que l'on nous a passé en paramètre depuis le controller
+TODO détails
+TODO filtres
+TODO acces selon autorisation
+TODO Actions
+-->
+    {% for s in sortie %}
+    <tr>
+        <td>
+            {{ s.nom }}
+        </td>
+
+        <td>
+            {{ s.dateHeureDebut|date("d-m-Y - H:i") }}
+        </td>
+
+
+        <td>
+            {{ s.dateLimiteInscription|date("d-m-Y - H:i") }}
+        </td>
+
+        <td>
+            {{ s.participants|length }} /
+            {{ s.nbInscriptionMax }}
+        </td>
+
+        <td>
+            {{ s.etat.libelle}}
+        </td>
+
+        <td>
+            TODO : user inscrit ou non ?
+        </td>
+
+        <td>
+            TODO : debug organisateur
+        </td>
+
+        <td>
+            TODO : Action
+        </td>
+    </tr>
+    {% endfor %}
+
+    </table>
 
 {% endblock %}
-
