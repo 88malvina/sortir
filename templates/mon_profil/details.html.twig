@@ -9,7 +9,7 @@
     <div class="detailsDeMonProfil">
         <div class="photoProfil">
             {% if(avatar) %}
-            <img src="{{ asset('img/'~avatar) }}" alt="avatar">
+            <img src="{{ asset('uploads/'~avatar) }}" alt="avatar">
             {% else %}
             <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
             {% endif %}
