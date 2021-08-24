@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 //v2 participant
 /**
@@ -39,6 +40,7 @@ class Participant implements UserInterface
     private $password;
 
     /**
+     * @Assert\NotBlank(message="Veuillez renseigner un nom, s'il vous plaît.")
      * @ORM\Column(type="string", length=50)
      */
     private $nom;

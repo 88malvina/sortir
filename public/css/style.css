@@ -7,7 +7,6 @@ body {
     background-size: cover;
     background: linear-gradient(white, #f6aef6) fixed center center;
     color: lightpink;
-    font-family: 'Quicksand', sans-serif;
 }
 
 /* Style the top navigation bar */
@@ -76,6 +75,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Quicksand', sans-serif;
 }
 
 body > .container {
@@ -116,5 +116,34 @@ input {
 }
 button{
     margin-top: 50px;
+}
+
+
+
+
+input,textarea,select{
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+    display: block;
+}
+
+form>div>div {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    width: auto;
+}
+
+.rememberMe {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 10px 10px 0px;
+}
+
+button {
+    padding: 5px 15px 5px 15px;
 }
 
