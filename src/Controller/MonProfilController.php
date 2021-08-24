@@ -17,7 +17,7 @@ class MonProfilController extends AbstractController
     /**
      * @Route("/mon/profil/", name="monprofil_afficher")
      */
-    public function afficher( Request $request,ParticipantRepository $participantRepository,EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function afficher( Request $request): Response
     {
             $participant=$this->getUser();
 
@@ -28,9 +28,42 @@ class MonProfilController extends AbstractController
                 "nom"=>$participant->getNom(),
                 "telephone"=>$participant->getTelephone(),
                 "email"=>$participant->getEmail(),
-                "campus"=>$participant->getCampus()->getNom()
+                "campus"=>$participant->getCampus()->getNom(),
+                "avatar"=>$participant->getImage()
             ]);
         }
 
+    /**
+     * @Route("/mon/profil/modifier", name="monprofil_modifier")
+     */
+    public function modifier( Request $request, SluggerInterface $slugger, EntityManagerInterface $em): Response
+    {
+        $participant=$this->getUser();
+        $profilForm = $this->createForm(MonProfilFormType::class, $participant);
+
+        $profilForm->handleRequest($request);
+        if($profilForm->isSubmitted() && $profilForm->isValid()) {
+            $uploadedFile = $profilForm->get('image')->getData();
+
+            if ($uploadedFile) {
+
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+
+                $uploadedFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename);
+
+                $participant->setImage($newFilename);
+                $em->flush();
+            }
+
+        }
+        return $this->render('mon_profil/monProfil.html.twig',[
+            "avatar"=>$participant->getImage(),
+            "profilForm"=>$profilForm->createView()
+        ]);
+    }
 
 }

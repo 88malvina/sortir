@@ -7,7 +7,13 @@ Mon Profil
 {% block main %}
         <h2>Mon profil</h2>
         <div class="profil">
-        <div class="photoProfil"></div>
+        <div class="photoProfil">
+                {% if(avatar) %}
+                        <img src="{{ asset('uploads/'~avatar) }}" alt="avatar">
+                {% else %}
+                        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
+                {% endif %}
+        </div>
         {{ form_start(profilForm) }}
         {{ form_widget(profilForm) }}
         <br>
