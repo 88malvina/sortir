@@ -65,7 +65,7 @@ body {
 
 #name_logo {
     color: #f8c8cf;
-    margin: 9px 25px 5px 0px;
+    margin: 9px 25px 5px 0;
     font-size: 3rem;
     font-family: 'Source Serif Pro', serif;
 }
@@ -76,6 +76,7 @@ main {
     flex-direction: column;
     align-items: center;
     font-family: 'Quicksand', sans-serif;
+    color: #592659;
 }
 
 body > .container {
@@ -141,7 +142,7 @@ label {
 .rememberMe {
     display: inline-block;
     text-align: center;
-    padding: 10px 10px 10px 0px;
+    padding: 10px 10px 10px 0;
 }
 
 button {
