@@ -18,7 +18,8 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@1,300&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+            {# <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> #}
 
             {# todo Ajout du datepicker pour l'affichage sympa des petits calendriers #}
 
@@ -27,10 +28,10 @@
 
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            {# <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> #}
         {% endblock %}
 
-        <link rel="icon" href="{{ asset('img/sortir.png') }}">
+        <link rel="icon" href="{{ asset('img/sortir.jpg') }}">
     </head>
     <body>
         {% include('inc/nav.html.twig') %}
