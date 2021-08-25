@@ -13,7 +13,11 @@
 
 <h2> Liste des sorties </h2>
 
-<!-- On commence par mettre en place la première ligne du tableau pour l'affichage -->
+    <!-- C'est géré dans le controller :
+    Soit on affiche toutes les sorties, soit si le filtre a été soumis on affiche la selection
+    -->
+
+    <!-- On commence par mettre en place la première ligne du tableau pour l'affichage -->
     <table class="table">
     <tr>
         <th>Nom de la Sortie</th>
@@ -26,12 +30,12 @@
         <th>Action</th>
     </tr>
 
-<!-- Ensuite on va boucler sur le tableau que l'on nous a passé en paramètre depuis le controller
-TODO détails
-TODO filtres
-TODO acces selon autorisation
-TODO Actions
--->
+    <!-- Ensuite on va boucler sur le tableau que l'on nous a passé en paramètre depuis le controller
+    TODO détails
+    TODO filtres
+    TODO acces selon autorisation
+    TODO Actions
+    -->
     {% for s in sortie %}
     <tr>
         <td>
