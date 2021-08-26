@@ -29,14 +29,18 @@ class SortieRepository extends ServiceEntityRepository
         //todo Il faudra toujours ajouter un and where pour s'assurer que la date au dela de 1 mois ne s'affiche pas
 
         //On commence par récupérer une variable qui retourne le jour du mois dernier
-        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+        $lastmonth = date('Y-m-d', strtotime('-1month'));
+        dump("lastmonth");
         dump($lastmonth);
+        dump("heure debut");
+        dump($sortieSearch->getDateHeureDebut());
 
         //on veut virer les vieilles sorties pourries par défaut (sans utiliser le form) donc on a besoin de la date
         //des sorties
         $query = $query
-            ->andWhere('s.dateHeureDebut >= :moisDernier')
+            ->andWhere('s.dateHeureDebut > :moisDernier')
             ->setParameter('moisDernier', $lastmonth);
+
 
         //pour chercher un bout de nom on laisse les % donc ok
         if (!empty($sortieSearch->getNom())) {
