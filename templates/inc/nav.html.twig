@@ -4,19 +4,23 @@
             <header>
                 <nav class="topnav">
                     <div id="logo_and_name">
-                        <a id="logo_header" href="{{ path('main') }}"><img src="{{ asset('img/sortir.jpg') }}" alt=logo" width="100px"></a>
+                        <a id="logo_header" href="{{ path('main') }}"><img src="{{ asset('img/sortir-modified.png') }}" alt=logo" width="80px"></a>
                         <p id="name_logo">Sortir.com</p>
                     </div>
                     <div>
                         {% if app.user %}
                             <a class="a_header" href="{{ path('main') }}" title="Page d'accueil">Accueil</a>
-                            <a class="a_header" href="#" title="Gérer les villes">Villes</a>
-                            <a class="a_header" href="#" title="Gérer les campus">Campus</a>
+
+                            {% if app.user.administrateur %}
+                                <a class="a_header" href="#" title="Gérer les villes">Villes</a>
+                                <a class="a_header" href="#" title="Gérer les campus">Campus</a>
+                                <a class="a_header" href="{{ path('register') }}" title="Inscription">Inscrire</a>
+                            {% endif %}
+
                             <a class="a_header" href="{{ path('monprofil_afficher') }}" title="Gérer mes informations">Mon profil</a>
                             <a class="a_header" href="{{ path('logout') }}" title="Se déconnecter">Déconnexion</a>
                         {% else %}
-                            <a class="a_header" href="{{ path('app_login') }}" title="Login">Login</a>
-                            <a class="a_header" href="{{ path('register') }}" title="Register">Register</a>
+                            <a class="a_header" href="{{ path('app_login') }}" title="Se connecter">Se connecter</a>
                         {% endif %}
                     </div>
                 </nav>

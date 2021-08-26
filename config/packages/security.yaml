@@ -43,3 +43,6 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: /login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }
+        -
+        # pourquoi ça ne marche pas ? \/
+        - { path: ^/register, roles: ROLE_ADMIN }
