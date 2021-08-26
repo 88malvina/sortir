@@ -149,18 +149,13 @@ button {
     padding: 5px 15px 5px 15px;
 }
 
-td{
+.detailsDeMonProfil td{
     width: 120px;
     padding-left: 50px;
 }
 .tdEmail{
     width: 400px;
 }
-table{
-    margin: 20px;
-}
-th{
-    padding-left: 150px;
-}
+
 
 
