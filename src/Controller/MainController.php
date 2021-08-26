@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Controller;
-
-use App\Entity\Sortie;
 use App\Form\FiltrerSortiesType;
 use App\Modele\SortieSearch;
 use App\Repository\SortieRepository;
@@ -18,7 +16,7 @@ class MainController extends AbstractController
     public function index(Request $request, SortieRepository $sortieRepository)
     {
         //---------------------- Gestion du formulaire --------------
-        //creation d'une instance de notre entite sortie
+        //creation d'une instance de notre entite sortieSearch, qui est une classe indé dans Modele
         $sortieRecherche = new SortieSearch();
 
         //On va ajouter un setter pour injecter valeur défaut user
@@ -44,7 +42,5 @@ class MainController extends AbstractController
         ]);
 
     }
-
-
 
 }

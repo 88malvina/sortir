@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Modele;
 
 use App\Entity\Campus;
 use App\Entity\Participant;
 
-class SortieSearch {
+class SortieSearch
+{
 
 //Déclarer tous les attributs
 //on ajoute un param pour l'user
@@ -13,6 +15,41 @@ class SortieSearch {
      * @var Participant
      */
     private $user;
+
+    /**
+     * @var string|null
+     */
+    private $nom;
+
+    /**
+     * @var Campus|null
+     */
+    private $campus;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $dateHeureDebut;
+
+    /**
+     * @var \DateTime|null
+     */
+    private $dateLimiteInscription;
+
+    /**
+     * @var boolean|null
+     */
+    private $jeSuisOrganisateur;
+
+    /**
+     * @var boolean|null
+     */
+    private $jeSuisInscrit;
+
+    /**
+     * @var boolean|null
+     */
+    private $jeNeSuisPasInscrit;
 
     /**
      * @return Participant
@@ -30,40 +67,7 @@ class SortieSearch {
         $this->user = $user;
     }
 
-/**
- * @var string|null
- */
-private $nom;
 
-/**
- * @var Campus|null
- */
-private $campus;
-
-/**
- * @var \DateTime|null
- */
-private $dateHeureDebut;
-
-/**
- * @var \DateTime|null
- */
-private $dateLimiteInscription;
-
-/**
- * @var boolean|null
- */
-private $jeSuisOrganisateur;
-
-/**
- * @var boolean|null
- */
-private $jeSuisInscrit;
-
-/**
- * @var boolean|null
- */
-private $jeNeSuisPasInscrit;
 
     /**
      * @return string|null

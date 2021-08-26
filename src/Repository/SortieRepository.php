@@ -26,6 +26,18 @@ class SortieRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('s');
 
+        //todo Il faudra toujours ajouter un and where pour s'assurer que la date au dela de 1 mois ne s'affiche pas
+
+        //On commence par récupérer une variable qui retourne le jour du mois dernier
+        $lastmonth = mktime(0, 0, 0, date("m")-1, date("d"), date("Y"));
+        dump($lastmonth);
+
+        //on veut virer les vieilles sorties pourries par défaut (sans utiliser le form) donc on a besoin de la date
+        //des sorties
+        $query = $query
+            ->andWhere('s.dateHeureDebut >= :moisDernier')
+            ->setParameter('moisDernier', $lastmonth);
+
         //pour chercher un bout de nom on laisse les % donc ok
         if (!empty($sortieSearch->getNom())) {
             $query = $query
@@ -34,40 +46,40 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         //pour tous les autres on injecte la valeur en dur direct sans guillemet
-        if (!empty($campus)) {
+        if (!empty($sortieSearch->getCampus())) {
             $query = $query
                 ->andWhere('s.campus = :campus')
                 ->setParameter('campus', $sortieSearch->getCampus());
         }
 
-        if (!empty($dateHeureDebut)) {
+        if (!empty($sortieSearch->getDateHeureDebut())) {
             $query = $query
                 ->andWhere('s.dateHeureDebut >= :dateHeureDebut')
                 ->setParameter('dateHeureDebut', $sortieSearch->getDateHeureDebut());
         }
 
-        if (!empty($dateLimiteInscription)) {
+        if (!empty($sortieSearch->getDateLimiteInscription())) {
             $query = $query
-                ->andWhere('s.dateLimiteInscription <= dateLimiteInscription')
+                ->andWhere('s.dateLimiteInscription <= :dateLimiteInscription')
                 ->setParameter('dateLimiteInscription', $sortieSearch->getDateLimiteInscription());
         }
 
-        if (!empty($jeSuisOrganisateur)) {
+        if (!empty($sortieSearch->getJeSuisOrganisateur())) {
             $query = $query
                 ->andWhere('s.jeSuisOrganisateur = :jeSuisOrganisateur')
                 ->setParameter('jeSuisOrganisateur', $sortieSearch->getJeSuisOrganisateur());
         }
 
         //le member ok marche uniquement car c'est du many to many
-        // estce que l'objet fourni fait partie de la colllection
-        if (!empty($jeSuisInscrit)) {
+        // il se demande en gros est ce que l'objet fourni fait partie de la collection
+        if (!empty($sortieSearch->getJeSuisInscrit())) {
             $query = $query
                 ->andWhere(':user MEMBER OF s.participants')
                 ->setParameter('user', $sortieSearch->getUser());
         }
 
         //On considère que l'état 5 est "passé"
-        if (!empty($sortiePassee)) {
+        if (!empty($sortieSearch->getSortiePassee())) {
             $query = $query
                 ->andWhere('s.etat = :etat')
                 ->setParameter('etat', 5);
@@ -75,7 +87,7 @@ class SortieRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
 
-        //todo Il faudra toujours ajouter un and where pour s'assurer que la date au dela de 1 mois ne s'affiche pas
+
 
 
     }
