@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+S'inscrire à une sortie | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <h1>Sortie {{ sortie.nom }}</h1>
+
+    {% for label, msgs in app.flashes %}
+        {% for msg in msgs %}
+            <div class="alert-{{ label }}">
+                {{ msg }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+
+{% endblock %}
+

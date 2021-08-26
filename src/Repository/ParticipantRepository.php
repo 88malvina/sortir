@@ -36,22 +36,26 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return Participant[] Returns an array of Participant objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Participant Returns a Participant object
+      */
+    public function findByMail($email) : Participant
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+        $participant = new Participant();
+
+        $array = $this->createQueryBuilder('p')
+            ->andWhere('p.email = :email')
+            ->setParameter('email', $email)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
+        foreach ($array as $p){
+            $participant = $p;
+        }
+
+        return $participant;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Participant

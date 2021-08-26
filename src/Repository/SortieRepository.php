@@ -97,6 +97,27 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
+    /**
+     * @return Sortie Returns a Sortie object
+     */
+    public function findById($id) : Sortie
+    {
+        $sortie = new Sortie();
+
+        $array = $this->createQueryBuilder('s')
+            ->andWhere('s.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($array as $s){
+            $sortie = $s;
+        }
+
+        return $sortie;
+    }
+
+
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects

@@ -79,7 +79,7 @@
                     <a href="#" title="Se désister"> - Se désister</a>
                 {% else %}
                     {% if not(s.nbInscriptionMax == s.participants|length) %}
-                        <a href="#" title="S'inscrire"> - S'inscrire</a>
+                        <a href="{{ path('inscrire', { 'id' : s.id }) }}" title="S'inscrire"> - S'inscrire</a>
                     {% endif %}
                 {% endif %}
             {% endif %}
