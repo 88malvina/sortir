@@ -61,15 +61,31 @@
         </td>
 
         <td>
-            TODO : user inscrit ou non ?
+            {% if app.user.estInscrit(s) %}
+            X
+            {% endif %}
         </td>
 
         <td>
-            TODO : debug organisateur
+            {{ s.organisateur.pseudo }}
         </td>
 
         <td>
-            TODO : Action
+            {% if app.user == s.organisateur %}
+                <a href="#" title="Modifier sortie">Modifier</a> - <a href="#" title="Publier sortie">Publier</a>
+            {% else %}
+                <a href="#" title="Details de la sortie">Afficher</a>
+                {% if app.user.estInscrit(s) %}
+                    <a href="#" title="Se désister"> - Se désister</a>
+                {% else %}
+                    {% if not(s.nbInscriptionMax == s.participants|length) %}
+                        <a href="#" title="S'inscrire"> - S'inscrire</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+
+
         </td>
     </tr>
     {% endfor %}

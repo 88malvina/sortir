@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -325,4 +326,20 @@ class Participant implements UserInterface
 
         return $this;
     }
+
+    public function estInscrit(?Sortie $sortie): bool
+    {
+        $estInscrit = false;
+        $participants = $sortie->getParticipants();
+
+        foreach ($participants as $p) {
+            if($p == $this){
+                $estInscrit = true;
+                break;
+            }
+        }
+
+        return $estInscrit;
+    }
+
 }
