@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-Mon Profil
-{% endblock %}
+{% block title %}{{ app.user.prenom }} | {{ parent() }}{% endblock %}
 
 {% block main %}
         <h2>Mon profil</h2>
