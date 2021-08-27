@@ -41,6 +41,9 @@ class SortieRepository extends ServiceEntityRepository
             ->andWhere('s.dateHeureDebut > :moisDernier')
             ->setParameter('moisDernier', $lastmonth);
 
+        //On ne veut pas afficher les sorties qui ont été annulées
+        $query = $query
+            ->andWhere('s.etat <> 2 ');
 
         //pour chercher un bout de nom on laisse les % donc ok
         if (!empty($sortieSearch->getNom())) {

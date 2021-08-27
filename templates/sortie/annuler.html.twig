@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block main %}
+    <div>
+        <h1>
+            Annuler sortie
+        </h1>
+
+        <h2> Nom : {{ sortie.nom }} </h2>
+        <h2> Date : {{ sortie.dateHeureDebut|date }} </h2>
+        <h2> Campus : {{ sortie.campus.nom }} </h2>
+        <h2> Lieu : {{ sortie.lieu.nom }} </h2>
+
+    {{ form_start(cancelForm) }}
+    {{ form_widget(cancelForm) }}
+    <button>Envoyer</button>
+    {{ form_end(cancelForm) }}
+
+    </div>
+{% endblock %}
+

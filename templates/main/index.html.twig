@@ -6,21 +6,18 @@
 
 <h2> Filtrer les sorties </h2>
 
+    {# todo mise en page #}
     {{ form_start(sortieForm) }}
 
-    {{ form_row(sortieForm.campus) }}
-    {{ form_row(sortieForm.nom) }}
-    {{ form_row(sortieForm.dateHeureDebut) }}
-    {{ form_row(sortieForm.dateLimiteInscription) }}
+        {{ form_row(sortieForm.campus) }}
+        {{ form_row(sortieForm.nom) }}
+        {{ form_row(sortieForm.dateHeureDebut) }}
+        {{ form_row(sortieForm.dateLimiteInscription) }}
 
-    <div>
-    {{ form_row(sortieForm.jeSuisInscrit) }}
-    {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
-    {{ form_row(sortieForm.jeSuisOrganisateur) }}
-    {{ form_row(sortieForm.sortiePassee) }}
-    </div>
-
-
+        {{ form_row(sortieForm.jeSuisInscrit) }}
+        {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
+        {{ form_row(sortieForm.jeSuisOrganisateur) }}
+        {{ form_row(sortieForm.sortiePassee) }}
 
     <button type="submit">Filtrer</button>
     <button type="reset">Annuler</button>
@@ -54,7 +51,7 @@
     TODO Actions
     -->
     {% for s in sortie %}
-    <tr class="centerText alternateLines">
+    <tr id="alternate" class="centerText">
         <td>
             {{ s.nom }}
         </td>
@@ -92,6 +89,8 @@
         <td>
             {% if app.user == s.organisateur %}
                 <a href="#" title="Modifier sortie">Modifier</a> - <a href="#" title="Publier sortie">Publier</a>
+                <a href=" {{ path('Sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Annuler</a>
+
             {% else %}
                 <a href="#" title="Details de la sortie">Afficher</a>
                 {% if app.user.estInscrit(s) %}
