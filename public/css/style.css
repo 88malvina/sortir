@@ -3,6 +3,22 @@
     padding-right: 50px;
 }
 
+.centerText{
+    text-align:center;
+}
+
+tr:nth-child(even) {background: white}
+tr:nth-child(odd) {background: lightgray}
+
+.thead-dark{
+    background-color:darkslategrey;
+    color:antiquewhite;
+}
+
+.backIsWhite{
+    background-color:white;
+}
+
 body {
     background-size: cover;
     background: linear-gradient(white, #f6aef6) fixed center center;

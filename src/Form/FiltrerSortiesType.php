@@ -55,25 +55,21 @@ class FiltrerSortiesType extends AbstractType
             'required' => false,
         ])
 
-        //Filtre sur organisateur mais ce champ n'est pas mappé !
-            ->add('jeSuisOrganisateur', CheckboxType::class, [
-            'label' => "Sorties dont je suis l'organisateur",
-            'required' => false,
+        ->add('jeSuisOrganisateur', CheckboxType::class, [
+        'label' => "Sorties dont je suis l'organisateur",
+        'required' => false,
         ])
 
-        //Filtre sur jesuisinscrit mais ce champ n'est pas mappé !
         ->add('jeSuisInscrit', CheckboxType::class, [
             'label' => "Sorties auxquelles je suis inscrit(e)",
             'required' => false,
         ])
 
-        //Filtre sur jeNeSuiSpasInscrit mais ce champ n'est pas mappé !
         ->add('jeNeSuisPasInscrit', CheckboxType::class, [
             'label' => "Sorties auxquelles je ne suis pas inscrit(e)",
             'required' => false,
         ])
 
-        //Filtre sur sortiePassee mais ce champ n'est pas mappé !
         ->add('sortiePassee', CheckboxType::class, [
             'label' => "Sorties passées",
             'required' => false,

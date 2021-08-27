@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sortir.com | Bienvenu.e !{% endblock %}
+{% block title %}Sortir.com | Bienvenue !{% endblock %}
 {% block main %}
 
+
 <h2> Filtrer les sorties </h2>
+
     {{ form_start(sortieForm) }}
-    {{ form_widget(sortieForm) }}
+
+    {{ form_row(sortieForm.campus) }}
+    {{ form_row(sortieForm.nom) }}
+    {{ form_row(sortieForm.dateHeureDebut) }}
+    {{ form_row(sortieForm.dateLimiteInscription) }}
+
+    <div>
+    {{ form_row(sortieForm.jeSuisInscrit) }}
+    {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
+    {{ form_row(sortieForm.jeSuisOrganisateur) }}
+    {{ form_row(sortieForm.sortiePassee) }}
+    </div>
+
+
 
     <button type="submit">Filtrer</button>
     <button type="reset">Annuler</button>
@@ -18,16 +33,18 @@
     -->
 
     <!-- On commence par mettre en place la première ligne du tableau pour l'affichage -->
-    <table class="table">
+    <table class="table backIsWhite">
     <tr>
-        <th>Nom de la Sortie</th>
-        <th>Date de la sortie</th>
-        <th>Cloture</th>
-        <th>Inscrits / places</th>
-        <th>Etat</th>
-        <th>Je suis inscrit</th>
-        <th>Organisateur</th>
-        <th>Action</th>
+
+        <th class="thead-dark"> Nom de la Sortie</th>
+        <th class="thead-dark">Date de la sortie</th>
+        <th class="thead-dark">Cloture</th>
+        <th class="thead-dark">Inscrits / places</th>
+        <th class="thead-dark">Etat</th>
+        <th class="thead-dark">Je suis inscrit</th>
+        <th class="thead-dark">Organisateur</th>
+        <th class="thead-dark">Action</th>
+
     </tr>
 
     <!-- Ensuite on va boucler sur le tableau que l'on nous a passé en paramètre depuis le controller
@@ -37,7 +54,7 @@
     TODO Actions
     -->
     {% for s in sortie %}
-    <tr>
+    <tr class="centerText alternateLines">
         <td>
             {{ s.nom }}
         </td>
@@ -60,7 +77,7 @@
             {{ s.etat.libelle}}
         </td>
 
-        <td>
+        <td class="centerText">
             {% if app.user.estInscrit(s) %}
             X
             {% endif %}
