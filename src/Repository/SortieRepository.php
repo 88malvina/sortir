@@ -73,8 +73,8 @@ class SortieRepository extends ServiceEntityRepository
 
         if (!empty($sortieSearch->getJeSuisOrganisateur())) {
             $query = $query
-                ->andWhere('s.jeSuisOrganisateur = :jeSuisOrganisateur')
-                ->setParameter('jeSuisOrganisateur', $sortieSearch->getJeSuisOrganisateur());
+                ->andWhere('s.organisateur = :jeSuisOrganisateur')
+                ->setParameter('jeSuisOrganisateur', $sortieSearch->getUser()->getNom());
         }
 
         //le member ok marche uniquement car c'est du many to many
