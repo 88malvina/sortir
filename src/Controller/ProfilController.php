@@ -13,10 +13,14 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+
+/**
+ * @Route("/profil", name="profil_")
+ */
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("/profil/{id}", name="profil_afficher")
+     * @Route("/{id}", name="afficher")
      */
     public function afficher(int $id,
                              ParticipantRepository $participantRepository): Response
@@ -29,7 +33,7 @@ class ProfilController extends AbstractController
         }
 
     /**
-     * @Route("/monprofil/modifier", name="monprofil_modifier")
+     * @Route("/modifier", name="modifier")
      */
     public function modifier( Request $request, UserPasswordEncoderInterface $userPassword,SluggerInterface $slugger, EntityManagerInterface $em): Response
     {

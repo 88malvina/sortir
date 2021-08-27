@@ -4,14 +4,14 @@
             <header>
                 <nav class="topnav">
                     <div id="logo_and_name">
-                        <a id="logo_header" href="{{ path('main') }}"><img src="{{ asset('img/sortir-modified.png') }}" alt=logo" width="80px"></a>
+                        <a id="logo_header" href="{{ path('main_home') }}"><img src="{{ asset('img/sortir-modified.png') }}" alt=logo" width="80px"></a>
                         <p id="name_logo">Sortir.com</p>
                     </div>
                     <div>
                         {% if app.user %}
-                            <a class="a_header" href="{{ path('main') }}" title="Page d'accueil">Accueil</a>
+                            <a class="a_header" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
 
-                            {% if app.user.administrateur %}
+                            {% if is_granted('ROLE_ADMIN') %}
                                 <a class="a_header" href="#" title="Gérer les villes">Villes</a>
                                 <a class="a_header" href="#" title="Gérer les campus">Campus</a>
                                 <a class="a_header" href="{{ path('register') }}" title="Inscription">Inscrire</a>

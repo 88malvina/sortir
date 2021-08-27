@@ -24,7 +24,7 @@ class FiltrerSortiesType extends AbstractType
 
         // Ici on veut une liste déroulante avec tous les différents campus
         ->add('campus',EntityType::class,[
-            'label' => 'campus',
+            'label' => 'Campus',
             'class' => Campus::class,
             'choice_label' => 'nom',
             'required' => false,
