@@ -38,11 +38,8 @@ class SortieController extends AbstractController
     {
 
         $participant = $participantRepository->findByMail($user->getUsername());
-        dump($participant);
 
         $sortie = $sortieRepository->findById($id);
-        dump($sortie);
-        dump($id);
 
         $sortie->addParticipant($participant);
 
@@ -56,4 +53,38 @@ class SortieController extends AbstractController
             'sortie' => $sortie
         ]);
     }
+
+
+    /**
+     * @Route("/desister/{id}", name="desister")
+     */
+    public function desister (int $id,
+                              EntityManagerInterface $entityManager,
+                              UserInterface $user,
+                              ParticipantRepository $participantRepository,
+                              SortieRepository $sortieRepository): Response
+    {
+
+        $participant = $participantRepository->findByMail($user->getUsername());
+
+        $sortie = $sortieRepository->findById($id);
+
+        $sortie->removeParticipant($participant);
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+
+        $this->addFlash('success', "Vous n'êtes plus inscrit à la sortie ".$sortie->getNom().' !');
+
+        return $this->render( 'sortie/inscrire.html.twig' , [
+            'sortie' => $sortie
+        ]);
+    }
+
+
+
+
+
+
 }
