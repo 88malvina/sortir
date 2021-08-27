@@ -37,7 +37,7 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
     }
 
      /**
-      * @return Participant Returns a Participant object
+      * @return Participant Returns un Participant
       */
     public function findByMail($email) : Participant
     {
@@ -46,6 +46,26 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $array = $this->createQueryBuilder('p')
             ->andWhere('p.email = :email')
             ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($array as $p){
+            $participant = $p;
+        }
+
+        return $participant;
+    }
+
+    /**
+     * @return Participant Returns un Participant
+     */
+    public function findById($id) : Participant
+    {
+        $participant = new Participant();
+
+        $array = $this->createQueryBuilder('p')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
 

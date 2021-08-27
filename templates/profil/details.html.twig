@@ -8,8 +8,8 @@
 
     <div class="detailsDeMonProfil">
         <div class="photoProfil">
-            {% if(avatar) %}
-            <img src="{{ asset('uploads/'~avatar) }}" alt="avatar">
+            {% if(participant.image) %}
+            <img src="{{ asset('uploads/'~participant.image) }}" alt="avatar">
             {% else %}
             <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
             {% endif %}
@@ -17,25 +17,29 @@
         <table>
             <thead>
             <tr>
-                <th colspan="2"><h2>{{ pseudo }}</h2></th>
+                <th colspan="2"><h2>{{ participant.pseudo }}</h2></th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>Prènom:</td>
-                <td>{{ prenom }}</td>
+                <td>Nom :</td>
+                <td>{{ participant.nom }}</td>
             </tr>
             <tr>
-                <td>Téléphone:</td>
-                <td>{{ telephone }}</td>
+                <td>Prènom :</td>
+                <td>{{ participant.prenom }}</td>
             </tr>
             <tr>
-                <td>Email:</td>
-                <td class="tdEmail">{{ email }}</td>
+                <td>Téléphone :</td>
+                <td>{{ participant.telephone }}</td>
             </tr>
             <tr>
-                <td>Campus:</td>
-                <td>{{ campus }}</td>
+                <td>Email :</td>
+                <td class="tdEmail">{{ participant.email }}</td>
+            </tr>
+            <tr>
+                <td>Campus :</td>
+                <td>{{ participant.campus.nom }}</td>
             </tr>
             <tr>
                 <td><a href="{{ path('main') }}"><button>Retour</button></a></td>

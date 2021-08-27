@@ -84,7 +84,9 @@
         </td>
 
         <td>
-            {{ s.organisateur.pseudo }}
+            <a href="{{ path('profil_afficher', { 'id' : s.organisateur.id }) }}" title="Gérer mes informations">
+                {{ s.organisateur.pseudo }}
+            </a>
         </td>
 
         <td>

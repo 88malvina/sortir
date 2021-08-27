@@ -3,37 +3,33 @@
 namespace App\Controller;
 
 use App\Form\MonProfilFormType;
+use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class MonProfilController extends AbstractController
+class ProfilController extends AbstractController
 {
     /**
-     * @Route("/mon/profil/", name="monprofil_afficher")
+     * @Route("/profil/{id}", name="profil_afficher")
      */
-    public function afficher( Request $request): Response
+    public function afficher(int $id,
+                             ParticipantRepository $participantRepository): Response
     {
-            $participant=$this->getUser();
+            $participant = $participantRepository->findById($id);
 
-            return $this->render('mon_profil/details.html.twig',[
-
-                "pseudo"=>$participant->getPseudo(),
-                "prenom"=>$participant->getPrenom(),
-                "nom"=>$participant->getNom(),
-                "telephone"=>$participant->getTelephone(),
-                "email"=>$participant->getEmail(),
-                "campus"=>$participant->getCampus()->getNom(),
-                "avatar"=>$participant->getImage()
+            return $this->render('profil/details.html.twig',[
+                "participant"=>$participant
             ]);
         }
 
     /**
-     * @Route("/mon/profil/modifier", name="monprofil_modifier")
+     * @Route("/monprofil/modifier", name="monprofil_modifier")
      */
     public function modifier( Request $request, UserPasswordEncoderInterface $userPassword,SluggerInterface $slugger, EntityManagerInterface $em): Response
     {
@@ -76,7 +72,7 @@ class MonProfilController extends AbstractController
             $em->flush();
 
         }
-        return $this->render('mon_profil/monProfil.html.twig',[
+        return $this->render('profil/monProfil.html.twig',[
             "avatar"=>$participant->getImage(),
             "profilForm"=>$profilForm->createView()
         ]);

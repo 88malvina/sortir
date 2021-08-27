@@ -17,7 +17,7 @@
                                 <a class="a_header" href="{{ path('register') }}" title="Inscription">Inscrire</a>
                             {% endif %}
 
-                            <a class="a_header" href="{{ path('monprofil_afficher') }}" title="Gérer mes informations">Mon profil</a>
+                            <a class="a_header" href="{{ path('profil_afficher', { 'id' : app.user.id }) }}" title="Gérer mes informations">Mon profil</a>
                             <a class="a_header" href="{{ path('logout') }}" title="Se déconnecter">Déconnexion</a>
                         {% else %}
                             <a class="a_header" href="{{ path('app_login') }}" title="Se connecter">Se connecter</a>
