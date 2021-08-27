@@ -5,16 +5,20 @@ S'inscrire à une sortie | {{ parent() }}
 {% endblock %}
 
 {% block main %}
+
     <h1>Sortie {{ sortie.nom }}</h1>
 
-    {% for label, msgs in app.flashes %}
+    <div class="flashMsg">
+        {% for label, msgs in app.flashes %}
         {% for msg in msgs %}
             <div class="alert-{{ label }}">
                 {{ msg }}
             </div>
         {% endfor %}
-    {% endfor %}
+        {% endfor %}
+    </div>
 
+    <a href="{{ path('main') }}"><button>Retour</button></a>
 
 {% endblock %}
 

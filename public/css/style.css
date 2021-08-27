@@ -7,8 +7,16 @@
     text-align:center;
 }
 
-tr:nth-child(even) {background: white}
-tr:nth-child(odd) {background: lightgray}
+tr:nth-child(even) {background: white;}
+tr:nth-child(odd) {background: lightgray;}
+
+td, th {
+    padding: 5px;
+}
+
+table, .flashMsg {
+    margin-bottom: 1em;
+}
 
 .thead-dark{
     background-color:darkslategrey;

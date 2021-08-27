@@ -2,16 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Form\MonProfilFormType;
-use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authenticator\Passport\UserPassportInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MonProfilController extends AbstractController
@@ -64,7 +61,7 @@ class MonProfilController extends AbstractController
                 $uploadedFile->move(
                     $this->getParameter('images_directory'),
                     $newFilename);
-                //to-do sauvegarder les modification dans la base de donnée
+                //to-do sauvegarder les modifications dans la base de donnée
                 $participant->setImage($newFilename);
 
                 $em->flush();

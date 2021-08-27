@@ -38,16 +38,20 @@ class SortieController extends AbstractController
     {
 
         $participant = $participantRepository->findByMail($user->getUsername());
-
         $sortie = $sortieRepository->findById($id);
 
-        $sortie->addParticipant($participant);
+        if ($sortie->getDateLimiteInscription() < new \DateTime())
+        {
+            $this->addFlash('notice', 'La date limite de inscription à la sortie '.$sortie->getNom().
+                ' est passé, désolé ! :(');
+        } else
+        {
+            $sortie->addParticipant($participant);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
 
-        $entityManager->persist($sortie);
-        $entityManager->flush();
-
-
-        $this->addFlash('success', 'Vous êtes désormais inscrit à la sortie '.$sortie->getNom().' !');
+            $this->addFlash('success', 'Vous êtes désormais inscrit à la sortie '.$sortie->getNom().' !');
+        }
 
         return $this->render( 'sortie/inscrire.html.twig' , [
             'sortie' => $sortie
@@ -66,14 +70,11 @@ class SortieController extends AbstractController
     {
 
         $participant = $participantRepository->findByMail($user->getUsername());
-
         $sortie = $sortieRepository->findById($id);
 
         $sortie->removeParticipant($participant);
-
         $entityManager->persist($sortie);
         $entityManager->flush();
-
 
         $this->addFlash('success', "Vous n'êtes plus inscrit à la sortie ".$sortie->getNom().' !');
 
