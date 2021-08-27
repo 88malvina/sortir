@@ -1,0 +1,10 @@
+<h1>Salut !</h1>
+
+<p>Pour changer votre mot de passe, cliquez sur le lien suivant :</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expire en {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Cordialement,
+    L'équipe Sortir.com</p>
