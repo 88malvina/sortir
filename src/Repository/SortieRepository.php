@@ -85,6 +85,15 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('user', $sortieSearch->getUser());
         }
 
+        //le member ok marche uniquement car c'est du many to many
+        // il se demande en gros est ce que l'objet fourni fait partie de la collection
+        if (!empty($sortieSearch->getJeNeSuisPasInscrit())) {
+            $query = $query
+                ->andWhere(':user NOT MEMBER OF s.participants')
+                ->setParameter('user', $sortieSearch->getUser());
+        }
+
+
         //On considère que l'état 5 est "passé"
         if (!empty($sortieSearch->getSortiePassee())) {
             $query = $query
