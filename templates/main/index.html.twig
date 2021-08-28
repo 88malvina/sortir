@@ -81,7 +81,7 @@
         </td>
 
         <td>
-            <a href="{{ path('profil_afficher', { 'id' : s.organisateur.id }) }}" title="Gérer mes informations">
+            <a href="{{ path('profil_afficher', { 'id' : s.organisateur.id }) }}" title="Organisateur">
                 {{ s.organisateur.pseudo }}
             </a>
         </td>
@@ -89,15 +89,15 @@
         <td>
             {% if app.user == s.organisateur %}
                 <a href="#" title="Modifier sortie">Modifier</a> - <a href="#" title="Publier sortie">Publier</a>
-                <a href=" {{ path('Sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Annuler</a>
+                <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Annuler</a>
 
             {% else %}
-                <a href="#" title="Details de la sortie">Afficher</a>
+                <a href="{{ path('sortie_afficher', { 'id' : s.id }) }}" title="Details de la sortie">Afficher</a>
                 {% if app.user.estInscrit(s) %}
-                    <a href="{{ path('desister', { 'id' : s.id }) }}" title="Se désister"> - Se désister</a>
+                    <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> - Se désister</a>
                 {% else %}
                     {% if not(s.nbInscriptionMax == s.participants|length) %}
-                        <a href="{{ path('inscrire', { 'id' : s.id }) }}" title="S'inscrire"> - S'inscrire</a>
+                        <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> - S'inscrire</a>
                     {% endif %}
                 {% endif %}
             {% endif %}
@@ -110,6 +110,6 @@
 
     </table>
 
-    <a href="{{ path('creer_sortie') }}"><button>Créer une sortie</button></a>
+    <a href="{{ path('sortie_create') }}"><button>Créer une sortie</button></a>
 
 {% endblock %}

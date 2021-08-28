@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ sortie.nom }} | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+<div id="detailSortie">
+    <div>
+        {% if(sortie.urlPhoto) %}
+            <img src="{{ asset('uploads/'~sortie.urlPhoto) }}" alt="Photo sortie">
+        {% else %}
+            <img src="{{ asset('img/sortie_avatar.jpg') }}" alt="Photo sortie" width="250px">
+        {% endif %}
+    </div>
+    <div>
+        <H2>{{ sortie.nom }} | {{ sortie.etat.libelle }}</H2>
+        <ul>
+            <li>
+                <i>Informations : </i> {{ sortie.infosSortie }}
+            </li>
+            <li>
+                <i>Date et heure de début : </i>{{ sortie.dateHeureDebut|date("d-m-Y - H:i") }}
+            </li>
+            <li>
+                <i>Date limite pour s'inscrire : </i>{{ sortie.dateLimiteInscription|date("d-m-Y - H:i") }}
+            </li>
+            <li>
+                <i>Durée : </i>{{ sortie.duree }} min
+            </li>
+            <li>
+                <i>Nombre de places : </i>{{ sortie.nbInscriptionMax }} places ({{ sortie.participants|length }} inscrits)
+            </li>
+            <li>
+                <i>Organisateur : </i> <a href="{{ path('profil_afficher', { 'id' : sortie.organisateur.id }) }}" title="Organisateur">
+                    {{ sortie.organisateur.pseudo }}</a>
+            </li>
+            <li>
+                <i>Campus : </i> {{ sortie.campus.nom }}
+            </li>
+            <li>
+                <i>Lieu : </i> {{ sortie.lieu.nom}} - {{ sortie.lieu.rue }} ({{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.cp }})
+            </li>
+        </ul>
+        <br>
+        <a href="{{ path('main_home') }}"><button>Retour</button></a>
+    </div>
+</div>
+{% endblock %}
+

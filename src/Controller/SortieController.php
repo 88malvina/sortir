@@ -9,8 +9,8 @@ use App\Form\CreateSortieType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Scalar\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,7 +49,7 @@ class SortieController extends AbstractController
         $participant = $participantRepository->findByMail($user->getUsername());
         $sortie = $sortieRepository->findById($id);
 
-        if ($sortie->getDateLimiteInscription() < new \DateTime())
+        if ($sortie->getDateLimiteInscription() < new DateTime())
         {
             $this->addFlash('notice', 'La date limite de inscription à la sortie '.$sortie->getNom().
                 ' est passé, désolé ! :(');
@@ -157,7 +157,18 @@ class SortieController extends AbstractController
     }
 
 
+    /**
+     * @Route("/{id}", name="afficher")
+     */
+    public function afficher(int $id,
+                             SortieRepository $sortieRepository): Response
+    {
+        $sortie = $sortieRepository->findById($id);
 
+        return $this->render('sortie/details.html.twig',[
+            "sortie"=>$sortie
+        ]);
+    }
 
 
 }
