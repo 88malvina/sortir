@@ -177,8 +177,20 @@ button{
     display: flex;
     flex-direction: row;
 }
-
-
+#create_sortie{
+    display: flex;
+    flex-direction: row;
+}
+.flex{
+    display: flex;
+}
+.first{
+    flex:45%;
+    margin-right: 5%;
+}
+.second{
+    flex:45%;
+}
 
 
 input,textarea,select{
@@ -195,6 +207,8 @@ form>div>div {
 label {
     display: block;
     width: auto;
+    justify-content: space-between;
+    margin: .5rem;
 }
 
 .rememberMe {
@@ -214,12 +228,6 @@ button {
 }
 .tdEmail{
     width: 400px;
-}
-#create_sortie__token{
-    width: 150px;
-    height: 50px;
-    background-color: red;
-    display: block;
 }
 
 

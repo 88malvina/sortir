@@ -7,10 +7,25 @@
 
 {% block main %}
     <h2>Créer une sortie</h2>
-
+    <div class="flex">
+    <div class="first">
     {{ form_start(sortieCreationForm) }}
-    {{ form_widget(sortieCreationForm) }}
-
+    {{ form_row(sortieCreationForm.nom)}}
+    {{ form_row(sortieCreationForm.dateHeureDebut)}}
+    {{ form_row(sortieCreationForm.dateLimiteInscription)}}
+    {{ form_row(sortieCreationForm.nbInscriptionMax)}}
+    {{ form_row(sortieCreationForm.duree)}}
+    {{ form_row(sortieCreationForm.infosSortie)}}
+    </div>
+    <div class="second">
+        {{ form_row(sortieCreationForm.campus)}}
+        {{ form_row(sortieCreationForm.ville)}}
+        {{ form_row(sortieCreationForm.lieu)}}
+        {{ form_row(sortieCreationForm.rue)}}
+        {{ form_row(sortieCreationForm.cp)}}
+        {{ form_row(sortieCreationForm.latitude)}}
+        {{ form_row(sortieCreationForm.longitude)}}
+    </div></div>
     <button type="">Enregistrer</button>
     <button type="reset">Annuler</button>
     <button type="">Publier la sortie</button>
@@ -36,7 +51,6 @@
                              selectedVille: selectedVille
                          },
                     success: function (lieux){
-                             console.log(lieux)
                                 lieuxSelect.innerHTML=""
                              let option=document.createElement("option")
                         let option2=document.createElement("option")
@@ -44,7 +58,6 @@
                         option.value="";
                         option.text="";
                         lieuxSelect.append(option2);
-                             console.log(lieuxSelect)
                         $.each(lieux,function (key,lieu){
                             option2.value=lieu.id;
                             option2.text=lieu.nom+" " +lieu.rue;
