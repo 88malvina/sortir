@@ -207,12 +207,19 @@ button {
     padding: 5px 15px 5px 15px;
 }
 
+
 .detailsDeMonProfil td{
     width: 120px;
     padding-left: 50px;
 }
 .tdEmail{
     width: 400px;
+}
+#create_sortie__token{
+    width: 150px;
+    height: 50px;
+    background-color: red;
+    display: block;
 }
 
 

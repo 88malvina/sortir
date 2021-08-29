@@ -10,6 +10,56 @@
 
     {{ form_start(sortieCreationForm) }}
     {{ form_widget(sortieCreationForm) }}
+
+    <button type="">Enregistrer</button>
+    <button type="reset">Annuler</button>
+    <button type="">Publier la sortie</button>
     {{ form_end(sortieCreationForm) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        function init(){
+            let ville = document.querySelector("#create_sortie_ville")
+                 ville.addEventListener("change",function () {
+                     let selectedVille = ville.options[ville.selectedIndex].index
+                     let lieuxSelect=document.querySelector("#create_sortie_lieu");
+                        console.log(selectedVille)
+
+                     $.ajax({
+                         url: "http://localhost/sortir/public/api/lieux/list_lieux",
+                         type: "GET",
+                         dataType: "JSON",
+                         data: {
+                             selectedVille: selectedVille
+                         },
+                    success: function (lieux){
+                             console.log(lieux)
+                                lieuxSelect.innerHTML=""
+                             let option=document.createElement("option")
+                        let option2=document.createElement("option")
+                             lieuxSelect.append(option);
+                        option.value="";
+                        option.text="";
+                        lieuxSelect.append(option2);
+                             console.log(lieuxSelect)
+                        $.each(lieux,function (key,lieu){
+                            option2.value=lieu.id;
+                            option2.text=lieu.nom+" " +lieu.rue;
+                        })
+                    }
+                     });
+
+
+                 });
+
+                    }
+        window.onload = ()=>{
+            init();
+        }
+    </script>
+
 {% endblock %}
 

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
+use App\Entity\Participant;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\CancelFormType;
 use App\Form\CreateSortieType;
 use App\Repository\EtatRepository;
@@ -12,6 +15,7 @@ use App\Repository\SortieRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,10 +30,44 @@ class SortieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(): Response
+    public function create(EntityManagerInterface $em,Request $request): Response
     {
         $sortie=new Sortie();
+        $user = $this->getUser();
+        $etat = $this->getDoctrine()->getRepository(Etat::class)->find('1');
         $sortieCreationForm = $this->createForm(CreateSortieType::class, $sortie);
+        $sortieCreationForm->handleRequest($request);
+        if($sortieCreationForm->isSubmitted() && $sortieCreationForm->isValid()){
+            $nom=$sortieCreationForm->get('nom')->getData();
+            $dateSortie=$sortieCreationForm->get('dateHeureDebut')->getData();
+            $dateLimite=$sortieCreationForm->get('dateLimiteInscription')->getData();
+            $nbPlace=$sortieCreationForm->get('nbInscriptionMax')->getData();
+            $duree=$sortieCreationForm->get('duree')->getData();
+            $info=$sortieCreationForm->get('infosSortie')->getData();
+            $campus=$user->getCampus();
+            $villeForm=$sortieCreationForm->get('ville')->getData();
+            $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
+            $rue=$sortieCreationForm->get('rue')->getData();
+            $cp=$sortieCreationForm->get('cp')->getData();
+            $latitude=$sortieCreationForm->get('latitude')->getData();
+            $longitude=$sortieCreationForm->get('longitude')->getData();
+            $idOrganisateur= $this->getDoctrine()->getRepository(Participant::class)->find($user);
+
+
+            $sortie->setNom($nom);
+            $sortie->setDateHeureDebut($dateSortie);
+            $sortie->setDateLimiteInscription($dateLimite);
+            $sortie->setNbInscriptionMax($nbPlace);
+            $sortie->setDuree($duree);
+            $sortie->setInfosSortie($info);
+            $sortie->setCampus($campus);
+            $sortie->setOrganisateur($idOrganisateur);
+            $sortie->setEtat($etat);
+            $sortie->setLieu($lieu);
+
+            $em->persist($sortie);
+            $em->flush();
+        }
         return $this->render('sortie/create.html.twig', [
             'controller_name' => 'SortieController',
             'sortieCreationForm'=>$sortieCreationForm->createView()
@@ -155,6 +193,11 @@ class SortieController extends AbstractController
             "sortie" => $sortie
         ]);
     }
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+
 
 
     /**
