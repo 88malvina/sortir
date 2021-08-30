@@ -67,6 +67,8 @@ class SortieController extends AbstractController
 
             $em->persist($sortie);
             $em->flush();
+
+            $this->addFlash('success', 'La sortie a bien été créée.');
         }
         return $this->render('sortie/create.html.twig', [
             'controller_name' => 'SortieController',
@@ -181,7 +183,7 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('success', "La sortie a été annulée ".$sortie->getNom().' !');
+            $this->addFlash('success', "La sortie ".$sortie->getNom().' a été annulée !');
 
             return $this->redirectToRoute('main_home');
         }
@@ -230,9 +232,7 @@ class SortieController extends AbstractController
         //todo corriger ça xD
         elseif ($sortieModifierForm->isSubmitted() && $sortieModifierForm->isValid()) {
             $nom = $sortieModifierForm['nom']->getData();
-            var_dump($nom);
-            $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();
-            var_dump($dateSortie);
+            $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();;
             $dateLimite=$sortieModifierForm->get('dateLimiteInscription')->getData();
             $nbPlace=$sortieModifierForm->get('nbInscriptionMax')->getData();
             $duree=$sortieModifierForm->get('duree')->getData();

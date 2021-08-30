@@ -3,25 +3,32 @@
 {% block title %}Sortir.com | Bienvenue !{% endblock %}
 {% block main %}
 
-
-<h2> Filtrer les sorties </h2>
-
+<div class="filtreSorties">
     {# todo mise en page #}
     {{ form_start(sortieForm) }}
+    <h2> Filtrer les sorties </h2>
+    <div class="filtreSorties1">
 
         {{ form_row(sortieForm.campus) }}
         {{ form_row(sortieForm.nom) }}
-        {{ form_row(sortieForm.dateHeureDebut) }}
-        {{ form_row(sortieForm.dateLimiteInscription) }}
+        {{ form_row(sortieForm.dateHeureDebut) }} {{ form_row(sortieForm.dateLimiteInscription) }}
+    </div>
 
+    <div>
         {{ form_row(sortieForm.jeSuisInscrit) }}
         {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
         {{ form_row(sortieForm.jeSuisOrganisateur) }}
         {{ form_row(sortieForm.sortiePassee) }}
+    </div>
 
-    <button type="submit">Filtrer</button>
-    <button type="reset">Annuler</button>
+    <div>
+        <button type="submit">Filtrer</button>
+        <button type="reset">Annuler</button>
+    </div>
+
     {{ form_end(sortieForm) }}
+</div>
+
 
 <h2> Liste des sorties </h2>
 
@@ -57,12 +64,12 @@
         </td>
 
         <td>
-            {{ s.dateHeureDebut|date("d-m-Y - H:i") }}
+            {{ s.dateHeureDebut|date("d/m/Y - H:i") }}
         </td>
 
 
         <td>
-            {{ s.dateLimiteInscription|date("d-m-Y - H:i") }}
+            {{ s.dateLimiteInscription|date("d/m/Y - H:i") }}
         </td>
 
         <td>
@@ -86,19 +93,23 @@
             </a>
         </td>
 
-        <td>
+        <td id="actionSortie">
             {% if app.user == s.organisateur %}
                 <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
+                -
                 <a href="#" title="Publier sortie">Publier</a>
+                -
                 <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Annuler</a>
 
             {% else %}
                 <a href="{{ path('sortie_afficher', { 'id' : s.id }) }}" title="Details de la sortie">Afficher</a>
                 {% if app.user.estInscrit(s) %}
-                    <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> - Se désister</a>
+                    -
+                    <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> Se désister</a>
                 {% else %}
                     {% if not(s.nbInscriptionMax == s.participants|length) and not(s.dateLimiteInscription < date()) %}
-                        <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> - S'inscrire</a>
+                        -
+                        <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> S'inscrire</a>
                     {% endif %}
                 {% endif %}
             {% endif %}

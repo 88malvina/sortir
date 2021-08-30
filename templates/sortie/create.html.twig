@@ -26,9 +26,11 @@
         {{ form_row(sortieCreationForm.latitude)}}
         {{ form_row(sortieCreationForm.longitude)}}
     </div></div>
-    <button type="">Enregistrer</button>
+    <button type="submit">Enregistrer</button>
     <button type="reset">Annuler</button>
-    <button type="">Publier la sortie</button>
+
+        {# TODO fonctionnalité publier la sortie #}
+    <button>Publier la sortie</button>
     {{ form_end(sortieCreationForm) }}
 {% endblock %}
 

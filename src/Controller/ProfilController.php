@@ -77,6 +77,7 @@ class ProfilController extends AbstractController
             $participant->setCampus($campus);
             $em->flush();
 
+            $this->addFlash('success', 'Votre profil a été modifié.');
         }
         return $this->render('profil/monProfil.html.twig',[
             "avatar"=>$participant->getImage(),

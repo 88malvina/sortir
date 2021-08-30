@@ -8,15 +8,7 @@ S'inscrire à une sortie | {{ parent() }}
 
     <h1>Sortie {{ sortie.nom }}</h1>
 
-    <div class="flashMsg">
-        {% for label, msgs in app.flashes %}
-        {% for msg in msgs %}
-            <div class="alert-{{ label }}">
-                {{ msg }}
-            </div>
-        {% endfor %}
-        {% endfor %}
-    </div>
+    {% include('inc/flashMessages.html.twig') %}
 
     <a href="{{ path('main_home') }}"><button>Retour</button></a>
 

@@ -3,6 +3,8 @@
 {% block title %}{{ app.user.prenom }} | {{ parent() }}{% endblock %}
 
 {% block main %}
+    {% include('inc/flashMessages.html.twig') %}
+
         <h2>Mon profil</h2>
         <div class="profil">
         <div class="photoProfil">

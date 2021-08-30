@@ -3,12 +3,31 @@
     padding-right: 50px;
 }
 
+.filtreSorties > form > div > div > label{
+    margin: 0;
+    padding: 0 0 0.1em 0.1em;
+}
+
+.filtreSorties1 > h2 , div{
+    color: #592659;
+    flex-direction: column;
+    margin: 0;
+    padding-right: 1em;
+    display: inline-flex;
+}
+
 .centerText{
     text-align:center;
 }
 
 td, th {
     padding: 5px;
+}
+
+#actionSortie {
+    padding: 10px;
+    display: inline-block;
+    width: max-content;
 }
 
 table, .flashMsg {
@@ -40,24 +59,44 @@ body {
     background-color: #592659;
     display: flex;
     align-items: center;
-    align-content: end
+    padding: 1px 0 1px 15px;
 }
 
 /* Style the topnav links */
-.topnav a,#name_logo {
+.topnav a {
     float: left;
     display: block;
     color: #f8c8cf;
-    text-align: center;
     padding: 15px;
+    text-align: center;
     text-decoration: none;
     border-left: #f8c8cf solid thin;
+}
+#name_logo{
+    color: #f8c8cf;
+    font-size: 3.2rem;
+    font-family: 'Source Serif Pro', serif;
+    font-weight: normal;
+    padding: 0.6em 0.6em 0 0.3em;
 }
 
 /* Change color on hover */
 .topnav a:hover {
     background-color: #f8c8cf;
     color: #f88f9f;
+}
+
+
+#logo_header:hover{
+    background-color: inherit;
+}
+
+#logo_header,#name_logo {
+    border: none;
+}
+
+#logo_header {
+    padding: 0;
 }
 
 .content {
@@ -80,20 +119,6 @@ body {
     padding: 35px;
 }
 
-#logo_header:hover{
-    background-color: inherit;
-}
-
-#logo_header,#name_logo {
-    border: none;
-}
-
-#name_logo {
-    color: #f8c8cf;
-    margin: 15px 25px 5px 0;
-    font-size: 3rem;
-    font-family: 'Source Serif Pro', serif;
-}
 
 #detailSortie > div > ul > li {
     list-style: none;
@@ -109,11 +134,12 @@ body {
 
 i {
     font-weight: bold;
-    margin-right: 0.5em;
+    margin-right: 0.7em;
 }
 
 h2 {
     text-shadow: rgba(180, 133, 180, 0.73) 2px 2px;
+    margin: 0 0 1em 0;
 }
 
 a > button , button{
@@ -122,6 +148,7 @@ a > button , button{
     background-color: #8d3d8d;
     padding: 0.7rem 1em 0.7em 1em;
     border-radius: 0.3em;
+    margin:0.5em;
 }
 
 a > button:hover, button:hover {
@@ -163,16 +190,13 @@ input {
     box-sizing: border-box;
 }
 .photoProfil{
-
     margin-right: 40px;
 }
 .profil{
     display: flex;
     flex-direction: row;
 }
-button{
-    margin-top: 50px;
-}
+
 .detailsDeMonProfil, #detailSortie{
     align-items: center;
     display: flex;
@@ -219,7 +243,6 @@ label {
 }
 
 button {
-    padding: 5px 15px 5px 15px;
 }
 
 
@@ -243,6 +266,6 @@ button {
     color:red;
     background-color:lightgrey;
     padding: 1em;
-    border-radius: 0.5em;
+    border-radius: 0.7em;
 }
 
