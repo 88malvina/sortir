@@ -195,7 +195,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/modifierSortie/{id}", name="modifier.html.twig")
+     * @Route("/modifier/{id}", name="modifier")
      */
     public function modifier (int $id,
                              EtatRepository $etatRepository,
