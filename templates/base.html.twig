@@ -39,17 +39,6 @@
         <link rel="icon" href="{{ asset('img/sortir.jpg') }}">
     </head>
     <body>
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
-    {% endfor %}
-
-    {% for message in app.flashes('fail') %}
-        <div class="alert alert-fail">
-            {{ message }}
-        </div>
-    {% endfor %}
 
         <main class="container">
             {% block main %}

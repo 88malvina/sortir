@@ -235,10 +235,14 @@ button {
 .alert-success{
     color:green;
     background-color:lightgrey;
+    padding: 1em;
+    border-radius: 0.5em;
 }
 
 .alert-fail{
     color:red;
     background-color:lightgrey;
+    padding: 1em;
+    border-radius: 0.5em;
 }
 

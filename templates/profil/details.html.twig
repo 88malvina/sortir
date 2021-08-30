@@ -9,9 +9,9 @@
     <div class="detailsDeMonProfil">
         <div class="photoProfil">
             {% if(participant.image) %}
-            <img src="{{ asset('uploads/'~participant.image) }}" alt="avatar">
+            <img src="{{ asset('uploads/'~participant.image) }}" alt="avatar" width="250px">
             {% else %}
-            <img src="{{ asset('img/avatar.jpg') }}" alt="avatar">
+            <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" width="250px">
             {% endif %}
         </div>
         <table>
