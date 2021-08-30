@@ -19,7 +19,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProfilController extends AbstractController
 {
     /**
-     * @Route("/{id}", name="afficher")
+     * @Route("/{id}", name="afficher", requirements={"id" = "\d+"})
      */
     public function afficher(int $id,
                              ParticipantRepository $participantRepository): Response
@@ -29,14 +29,17 @@ class ProfilController extends AbstractController
             return $this->render('profil/details.html.twig',[
                 "participant"=>$participant
             ]);
-        }
+    }
 
     /**
      * @Route("/modifier", name="modifier")
      */
-    public function modifier( Request $request, UserPasswordEncoderInterface $userPassword,SluggerInterface $slugger, EntityManagerInterface $em): Response
+    public function modifier( Request $request,
+                              UserPasswordEncoderInterface $userPassword,
+                              SluggerInterface $slugger,
+                              EntityManagerInterface $em): Response
     {
-        $participant=$this->getUser();
+        $participant = $this->getUser();
         $profilForm = $this->createForm(MonProfilFormType::class, $participant);
 
         $profilForm->handleRequest($request);

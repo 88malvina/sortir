@@ -24,7 +24,14 @@ class SortieRepository extends ServiceEntityRepository
     public function findByParameters(SortieSearch $sortieSearch)
     {
         $query = $this
-            ->createQueryBuilder('s');
+            ->createQueryBuilder('s')
+            ->join('s.etat', 'e')
+            ->addSelect('e')
+            ->join('s.organisateur', 'o')
+            ->addSelect('o')
+            ->join('s.participants', 'p')
+            ->addSelect('p');
+
 
         //todo Il faudra toujours ajouter un and where pour s'assurer que la date au dela de 1 mois ne s'affiche pas
 
