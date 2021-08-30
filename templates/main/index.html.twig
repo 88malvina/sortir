@@ -88,7 +88,8 @@
 
         <td>
             {% if app.user == s.organisateur %}
-                <a href="#" title="Modifier sortie">Modifier</a> - <a href="#" title="Publier sortie">Publier</a>
+                <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
+                <a href="#" title="Publier sortie">Publier</a>
                 <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Annuler</a>
 
             {% else %}

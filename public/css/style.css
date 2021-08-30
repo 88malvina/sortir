@@ -232,4 +232,13 @@ button {
 }
 
 
+.alert-success{
+    color:green;
+    background-color:lightgrey;
+}
+
+.alert-fail{
+    color:red;
+    background-color:lightgrey;
+}
 

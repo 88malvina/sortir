@@ -193,6 +193,88 @@ class SortieController extends AbstractController
             "sortie" => $sortie
         ]);
     }
+
+    /**
+     * @Route("/modifierSortie/{id}", name="modifier.html.twig")
+     */
+    public function modifier (int $id,
+                             EtatRepository $etatRepository,
+                             EntityManagerInterface $em,
+                             UserInterface $user,
+                             ParticipantRepository $participantRepository,
+                             SortieRepository $sortieRepository,
+                             Request $request
+    ): Response
+
+        //Donc on veut que l'organisateur soit redirigé vers une page modification avec le formulaire
+        // tous les champs renseignés et possibilité de modifier.html.twig
+        //Pour ça on va copier la page créer sortie et rebalancer les données dans les champs
+        //Il faudra vérifier que l'on est bien le créateur de la sortie d'abord
+    {
+        //On commence par créer une nouvelle sortie qui va permettre de réinjecter les données
+        $sortie = new Sortie();
+        //On hydrate la sortie avec les données de la sortie sur laquelle on est
+        $sortie = $sortieRepository->findById($id);
+        //On récupère l'user qui sera utile pour la verif à suivre
+        $user = $this->getUser();
+        //On créé un formulaire de type create Form
+        $sortieModifierForm = $this->createForm(CreateSortieType::class,$sortie);
+        //On oublie pas de faire le handleRequest
+        $sortieModifierForm->handleRequest($request);
+
+        //Vérification que la personne qui modifie est bien l'organisateur
+        if($user != $sortie->getOrganisateur()) {
+            $this->addFlash('fail', 'Vous ne pouvez pas modifier cette sortie');
+        }
+        //si le formulaire a été submit, on le persist en base
+        elseif ($sortieModifierForm->isSubmitted() && $sortieModifierForm->isValid()) {
+            $nom=$sortieModifierForm->get('nom')->getData();
+            $dateSortie=$sortieModifierForm->get('dateHeureDebut')->getData();
+            $dateLimite=$sortieModifierForm->get('dateLimiteInscription')->getData();
+            $nbPlace=$sortieModifierForm->get('nbInscriptionMax')->getData();
+            $duree=$sortieModifierForm->get('duree')->getData();
+            $info=$sortieModifierForm->get('infosSortie')->getData();
+            $campus=$user->getCampus();
+            $villeForm=$sortieModifierForm->get('ville')->getData();
+            $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
+            $rue=$sortieModifierForm->get('rue')->getData();
+            $cp=$sortieModifierForm->get('cp')->getData();
+            $latitude=$sortieModifierForm->get('latitude')->getData();
+            $longitude=$sortieModifierForm->get('longitude')->getData();
+            $idOrganisateur= $this->getDoctrine()->getRepository(Participant::class)->find($user);
+
+            //L'état que l'on veut attribuer est l'état 1 que l'on va instancier
+            $etat = $this->getDoctrine()->getRepository(Etat::class)->find('1');
+
+            $sortie->setNom($nom);
+            $sortie->setDateHeureDebut($dateSortie);
+            $sortie->setDateLimiteInscription($dateLimite);
+            $sortie->setNbInscriptionMax($nbPlace);
+            $sortie->setDuree($duree);
+            $sortie->setInfosSortie($info);
+            $sortie->setCampus($campus);
+            $sortie->setOrganisateur($idOrganisateur);
+            $sortie->setEtat($etat);
+            $sortie->setLieu($lieu);
+
+            $em->persist($sortie);
+            $em->flush();
+        }
+
+        //On met un petit message de success
+        $this->addFlash('success', 'Sortie modifiée :D');
+
+
+        //On dirige vers la page modifier.html.twig en passant la sortie hydratée
+
+        return $this->render('sortie/modifier.html.twig', [
+            'sortieModifierForm'=>$sortieModifierForm->createView()
+        ]);
+    }
+
+
+
+
     /**
      * @param Request $request
      * @return JsonResponse

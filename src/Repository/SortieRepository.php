@@ -23,6 +23,7 @@ class SortieRepository extends ServiceEntityRepository
     //Il nous faut une fonction spécifique pour renvoyer les sorties après filtre
     public function findByParameters(SortieSearch $sortieSearch)
     {
+
         $query = $this
             ->createQueryBuilder('s')
             ->join('s.etat', 'e')
@@ -32,8 +33,6 @@ class SortieRepository extends ServiceEntityRepository
             ->join('s.participants', 'p')
             ->addSelect('p');
 
-
-        //todo Il faudra toujours ajouter un and where pour s'assurer que la date au dela de 1 mois ne s'affiche pas
 
         //On commence par récupérer une variable qui retourne le jour du mois dernier
         $lastmonth = date('Y-m-d', strtotime('-1month'));

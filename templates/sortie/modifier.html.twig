@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Modifier une sortie
+{% endblock %}
+
+{% block main %}
+    <h2>Modifier une sortie</h2>
+    <div class="flex">
+        <div class="first">
+            {{ form_start(sortieModifierForm) }}
+            {{ form_row(sortieModifierForm.nom)}}
+            {{ form_row(sortieModifierForm.dateHeureDebut)}}
+            {{ form_row(sortieModifierForm.dateLimiteInscription)}}
+            {{ form_row(sortieModifierForm.nbInscriptionMax)}}
+            {{ form_row(sortieModifierForm.duree)}}
+            {{ form_row(sortieModifierForm.infosSortie)}}
+        </div>
+        <div class="second">
+            {{ form_row(sortieModifierForm.campus)}}
+            {{ form_row(sortieModifierForm.ville)}}
+            {{ form_row(sortieModifierForm.lieu)}}
+            {{ form_row(sortieModifierForm.rue)}}
+            {{ form_row(sortieModifierForm.cp)}}
+            {{ form_row(sortieModifierForm.latitude)}}
+            {{ form_row(sortieModifierForm.longitude)}}
+        </div></div>
+    <button type="">Enregistrer</button>
+    <button type="reset">Annuler</button>
+    <button type="">Publier la sortie</button>
+    {{ form_end(sortieModifierForm) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script>
+        function init(){
+            let ville = document.querySelector("#create_sortie_ville")
+            ville.addEventListener("change",function () {
+                let selectedVille = ville.options[ville.selectedIndex].index
+                let lieuxSelect=document.querySelector("#create_sortie_lieu");
+                console.log(selectedVille)
+
+                $.ajax({
+                    url: "http://localhost/sortir/public/api/lieux/list_lieux",
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+                        selectedVille: selectedVille
+                    },
+                    success: function (lieux){
+                        lieuxSelect.innerHTML=""
+                        let option=document.createElement("option")
+                        let option2=document.createElement("option")
+                        lieuxSelect.append(option);
+                        option.value="";
+                        option.text="";
+                        lieuxSelect.append(option2);
+                        $.each(lieux,function (key,lieu){
+                            option2.value=lieu.id;
+                            option2.text=lieu.nom+" " +lieu.rue;
+                        })
+                    }
+                });
+
+
+            });
+
+        }
+        window.onload = ()=>{
+            init();
+        }
+    </script>
+
+{% endblock %}
+

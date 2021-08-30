@@ -32,7 +32,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/modifier", name="modifier")
+     * @Route("/modifier.html.twig", name="modifier.html.twig")
      */
     public function modifier( Request $request,
                               UserPasswordEncoderInterface $userPassword,
