@@ -227,21 +227,18 @@ class SortieController extends AbstractController
             $this->addFlash('fail', 'Vous ne pouvez pas modifier cette sortie');
         }
         //si le formulaire a été submit, on le persist en base
+        //todo corriger ça xD
         elseif ($sortieModifierForm->isSubmitted() && $sortieModifierForm->isValid()) {
-            $nom=$sortieModifierForm->get('nom')->getData();
-            $dateSortie=$sortieModifierForm->get('dateHeureDebut')->getData();
+            $nom = $sortieModifierForm['nom']->getData();
+            var_dump($nom);
+            $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();
+            var_dump($dateSortie);
             $dateLimite=$sortieModifierForm->get('dateLimiteInscription')->getData();
             $nbPlace=$sortieModifierForm->get('nbInscriptionMax')->getData();
             $duree=$sortieModifierForm->get('duree')->getData();
             $info=$sortieModifierForm->get('infosSortie')->getData();
             $campus=$user->getCampus();
-            $villeForm=$sortieModifierForm->get('ville')->getData();
-            $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
-            $rue=$sortieModifierForm->get('rue')->getData();
-            $cp=$sortieModifierForm->get('cp')->getData();
-            $latitude=$sortieModifierForm->get('latitude')->getData();
-            $longitude=$sortieModifierForm->get('longitude')->getData();
-            $idOrganisateur= $this->getDoctrine()->getRepository(Participant::class)->find($user);
+            $lieu=$sortieModifierForm->get('lieu')->getData();
 
             //L'état que l'on veut attribuer est l'état 1 que l'on va instancier
             $etat = $this->getDoctrine()->getRepository(Etat::class)->find('1');
@@ -253,17 +250,15 @@ class SortieController extends AbstractController
             $sortie->setDuree($duree);
             $sortie->setInfosSortie($info);
             $sortie->setCampus($campus);
-            $sortie->setOrganisateur($idOrganisateur);
             $sortie->setEtat($etat);
             $sortie->setLieu($lieu);
 
             $em->persist($sortie);
             $em->flush();
+
+            //On met un petit message de success
+            $this->addFlash('success', 'Sortie modifiée :D');
         }
-
-        //On met un petit message de success
-        $this->addFlash('success', 'Sortie modifiée :D');
-
 
         //On dirige vers la page modifier.html.twig en passant la sortie hydratée
 
