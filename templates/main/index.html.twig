@@ -96,7 +96,7 @@
                 {% if app.user.estInscrit(s) %}
                     <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> - Se désister</a>
                 {% else %}
-                    {% if not(s.nbInscriptionMax == s.participants|length) %}
+                    {% if not(s.nbInscriptionMax == s.participants|length) and not(s.dateLimiteInscription < date()) %}
                         <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> - S'inscrire</a>
                     {% endif %}
                 {% endif %}
