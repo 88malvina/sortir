@@ -7,9 +7,6 @@
     text-align:center;
 }
 
-tr:nth-child(even) {background: white;}
-tr:nth-child(odd) {background: lightgray;}
-
 td, th {
     padding: 5px;
 }
@@ -23,8 +20,12 @@ table, .flashMsg {
     color:antiquewhite;
 }
 
-.backIsWhite{
-    background-color:white;
+.alter tr:nth-child(odd) {
+    background: lightgray;
+}
+
+.alter tr:nth-child(even) {
+    background: white;
 }
 
 body {
