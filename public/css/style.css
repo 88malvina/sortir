@@ -260,18 +260,18 @@ label {
     width: 400px;
 }
 .modal {
-    position: fixed; /* фиксированное положение */
+    position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0,0,0,0.5); /* цвет фона */
+    background: rgba(0,0,0,0.5);
     z-index: 1050;
-    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    opacity: 0;
     -webkit-transition: opacity 200ms ease-in;
     -moz-transition: opacity 200ms ease-in;
-    transition: opacity 200ms ease-in; /* анимация перехода */
-    pointer-events: none; /* элемент невидим для событий мыши */
+    transition: opacity 200ms ease-in;
+    pointer-events: none;
     margin: 0;
     padding: 0;
 }
@@ -280,7 +280,7 @@ label {
     opacity: 1;
     pointer-events: auto;
 }
-/* ширина модального окна и его отступы от экрана */
+/* width*/
 .modal-dialog {
     position: relative;
     margin: 10px;
