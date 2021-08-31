@@ -77,10 +77,11 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('dateLimiteInscription', $sortieSearch->getDateLimiteInscription());
         }
 
+        //Participant-
         if (!empty($sortieSearch->getJeSuisOrganisateur())) {
             $query = $query
                 ->andWhere('s.organisateur = :jeSuisOrganisateur')
-                ->setParameter('jeSuisOrganisateur', $sortieSearch->getUser()->getNom());
+                ->setParameter('jeSuisOrganisateur', $sortieSearch->getUser()->getId());
         }
 
         //le member ok marche uniquement car c'est du many to many

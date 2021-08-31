@@ -259,7 +259,7 @@ class SortieController extends AbstractController
         //On hydrate la sortie avec les données de la sortie sur laquelle on est
         $sortie = $sortieRepository->findById($id);
         //On récupère l'user qui sera utile pour la verif à suivre
-        $user = $this->getUser();
+        $user = $this->getUser();//-----------------
 
         //----------------- gestion du formulaire de lieu-----------
         //D'abord on veut récupérer les infos du lieu de la sortie à modifier
