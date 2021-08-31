@@ -31,13 +31,17 @@ class SortieController extends AbstractController
     /**
      * @Route("/create", name="create")
      */
-    public function create(EntityManagerInterface $em,Request $request): Response
+    public function create(EntityManagerInterface $em,
+                           Request $request,
+                            ParticipantRepository $participantRepository
+    ): Response
     {
         //ajouter le lieu
         $ajouterLieu=new Lieu();
         //le formulaire (ajouter un lieu) est appelé
         $ajouterLieuForm=$this->createForm(LieuType::class,$ajouterLieu);
         $ajouterLieuForm->handleRequest($request);
+
         if($ajouterLieuForm->isSubmitted() && $ajouterLieuForm->isValid()) {
 
 
@@ -83,7 +87,13 @@ class SortieController extends AbstractController
             $sortie->setEtat($etat);
             $sortie->setLieu($lieu);
 
+            //L'organisateur de la sortie est par défaut affecté en tant que participant
+            $participantSortie = new Participant();
+            $participantSortie = $participantRepository->findByMail($user->getUsername());
+            $sortie->addParticipant($participantSortie);
+
             $em->persist($sortie);
+
             $em->flush();
 
             $this->addFlash('success',"La sortie a été créée!");
