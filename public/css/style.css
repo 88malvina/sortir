@@ -216,6 +216,9 @@ input {
     margin-right: 5%;
     /*width: 50%;*/
 }
+.first div:nth-child(4)>input{
+    width: 50px;
+}
 .second{
     grid-column: span 2;
     /*width: 50%;*/
