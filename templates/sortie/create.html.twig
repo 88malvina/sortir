@@ -31,39 +31,25 @@
         {{ form_row(sortieCreationForm.ville)}}
        <div class="ajouter">{{ form_row(sortieCreationForm.lieu)}}
 {#      <a href="#modal" data-toggle="modal" data-target="#modal"></a>#}
-       <a href="#faireApparaitre" onclick="displayDiv()"><img src="{{ asset('img/plus.png') }}" alt="ajouter un lieu"></a>
-           {{ form_end(sortieCreationForm) }}
-       </div>
+       <a href="#" onclick="displayDiv()"><img src="{{ asset('img/plus.png') }}" alt="ajouter un lieu"></a>
+       </div> </div>
+        <div class="formButtons">
+               <button type="">Enregistrer</button>
+               <button type="reset">Annuler</button>
+               <button type="">Publier la sortie</button>
+           </div>
+
+       {{ form_end(sortieCreationForm) }}
         <div id="faireApparaitre">
             {{ form_start(ajouterLieuForm) }}
+            <h4>Ajouter un lieu</h4>
             {{ form_widget(ajouterLieuForm) }}<br>
             <button id="submit" type="submit" > Ajouter</button>
             {{ form_end(ajouterLieuForm) }}
         </div>
-    </div>
-    </div>
-    </div>
-    <div class="formButtons">
-    <button type="">Enregistrer</button>
-    <button type="reset">Annuler</button>
-    <button type="">Publier la sortie</button>
-    </div>
 
 
-{#    <div id="modal" class="modal">#}
-{#        <div class="modal-dialog">#}
-{#            <div class="modal-content">#}
-{#                <div class="modal-header">#}
-{#                    <h3 class="modal-title">Ajouter le lieu</h3>#}
-{#                    <a href="#close" title="Close" class="close">×</a>#}
-{#                    {{ form_start(ajouterLieuForm) }}#}
-{#                    {{ form_widget(ajouterLieuForm) }}<br>#}
-{#                   <button id="submit" type="submit" > Ajouter</button>#}
-{#                    {{ form_end(ajouterLieuForm) }}#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -81,14 +67,6 @@
                 visibility=false;
             }
         }
-        // function closeModal(){
-        //     let submit=document.querySelector("submit")
-        //     let x=document.querySelector("#modal")
-        //     console.log(submit);
-        //     submit.addEventListener('onclick',function (){
-        //         $('#modal').modal('hide');
-        //     });
-        // }
         function init(){
             let ville = document.querySelector("#create_sortie_ville")
                  ville.addEventListener("change",function () {
