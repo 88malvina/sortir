@@ -11,6 +11,7 @@ use App\Form\CancelFormType;
 use App\Form\CreateSortieType;
 use App\Form\LieuType;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 use DateTime;
@@ -33,7 +34,7 @@ class SortieController extends AbstractController
      */
     public function create(EntityManagerInterface $em,
                            Request $request,
-                            ParticipantRepository $participantRepository
+                           ParticipantRepository $participantRepository
     ): Response
     {
         //ajouter le lieu
@@ -243,6 +244,7 @@ class SortieController extends AbstractController
                              UserInterface $user,
                              ParticipantRepository $participantRepository,
                              SortieRepository $sortieRepository,
+                             LieuRepository $lieuRepository,
                              Request $request
     ): Response
 
@@ -251,12 +253,22 @@ class SortieController extends AbstractController
         //Pour ça on va copier la page créer sortie et rebalancer les données dans les champs
         //Il faudra vérifier que l'on est bien le créateur de la sortie d'abord
     {
+
         //On commence par créer une nouvelle sortie qui va permettre de réinjecter les données
         $sortie = new Sortie();
         //On hydrate la sortie avec les données de la sortie sur laquelle on est
         $sortie = $sortieRepository->findById($id);
         //On récupère l'user qui sera utile pour la verif à suivre
         $user = $this->getUser();
+
+        //----------------- gestion du formulaire de lieu-----------
+        //D'abord on veut récupérer les infos du lieu de la sortie à modifier
+        $modifierLieu = new Lieu();
+        //On hydrate le lieu avec le lieu renseigné avant
+        $modifierLieu = $lieuRepository->find($sortie->getLieu()->getId());
+        $ajouterLieuForm = $this->createForm(LieuType::class,$modifierLieu);
+        //----------------------------------------------------------
+
         //On créé un formulaire de type create Form
         $sortieModifierForm = $this->createForm(CreateSortieType::class,$sortie);
         //On oublie pas de faire le handleRequest
@@ -269,16 +281,16 @@ class SortieController extends AbstractController
         //si le formulaire a été submit, on le persist en base
         //todo corriger ça xD
         elseif ($sortieModifierForm->isSubmitted() && $sortieModifierForm->isValid()) {
+            //On récupère les champs (2 façons de l'écrire pour info)
             $nom = $sortieModifierForm['nom']->getData();
-            var_dump($nom);
             $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();
-            var_dump($dateSortie);
             $dateLimite=$sortieModifierForm->get('dateLimiteInscription')->getData();
             $nbPlace=$sortieModifierForm->get('nbInscriptionMax')->getData();
             $duree=$sortieModifierForm->get('duree')->getData();
             $info=$sortieModifierForm->get('infosSortie')->getData();
             $campus=$user->getCampus();
-            $lieu=$sortieModifierForm->get('lieu')->getData();
+            $villeForm=$sortieModifierForm->get('ville')->getData();
+            $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
 
             //L'état que l'on veut attribuer est l'état 1 que l'on va instancier
             $etat = $this->getDoctrine()->getRepository(Etat::class)->find('1');
@@ -303,7 +315,8 @@ class SortieController extends AbstractController
         //On dirige vers la page modifier.html.twig en passant la sortie hydratée
 
         return $this->render('sortie/modifier.html.twig', [
-            'sortieModifierForm'=>$sortieModifierForm->createView()
+            'sortieModifierForm'=>$sortieModifierForm->createView(),
+            'ajouterLieuForm'=>$ajouterLieuForm->createView()
         ]);
     }
 

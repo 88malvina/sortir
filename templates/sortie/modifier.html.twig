@@ -22,22 +22,44 @@ Modifier une sortie
         <div class="second">
             {{ form_row(sortieModifierForm.campus)}}
             {{ form_row(sortieModifierForm.ville)}}
-            {{ form_row(sortieModifierForm.lieu)}}
-            {{ form_row(sortieModifierForm.rue)}}
-            {{ form_row(sortieModifierForm.cp)}}
-            {{ form_row(sortieModifierForm.latitude)}}
-            {{ form_row(sortieModifierForm.longitude)}}
-        </div></div>
-    <button type="submit">Enregistrer</button>
-    <button type="reset">Annuler</button>
-    <button type="submit">Publier la sortie</button>
-    {{ form_end(sortieModifierForm) }}
+            <div class="ajouter">{{ form_row(sortieModifierForm.lieu)}}
+                {#      <a href="#modal" data-toggle="modal" data-target="#modal"></a>#}
+                <a href="#" onclick="displayDiv()"><img src="{{ asset('img/plus.png') }}" alt="ajouter un lieu"></a>
+            </div> </div>
+        <div class="formButtons">
+            <button type="submit">Enregistrer</button>
+            <button type="reset">Annuler</button>
+            <button type="">Publier la sortie</button>
+        </div>
+
+        {{ form_end(sortieModifierForm) }}
+        <div id="faireApparaitre">
+            {{ form_start(ajouterLieuForm) }}
+            <h4>Ajouter un lieu</h4>
+            {{ form_widget(ajouterLieuForm) }}<br>
+            <button id="submit" type="submit" > Ajouter</button>
+            {{ form_end(ajouterLieuForm) }}
+        </div>
+
+
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
+        let visibility=false;
+        function displayDiv(){
+            let myDiv = document.querySelector("#faireApparaitre");
+            if(visibility===false){
+                myDiv.style.visibility="visible";
+                visibility=true;}
+            else{
+                myDiv.style.visibility="hidden";
+                visibility=false;
+            }
+        }
         function init(){
             let ville = document.querySelector("#create_sortie_ville")
             ville.addEventListener("change",function () {
@@ -55,14 +77,19 @@ Modifier une sortie
                     success: function (lieux){
                         lieuxSelect.innerHTML=""
                         let option=document.createElement("option")
-                        let option2=document.createElement("option")
+                        console.log(selectedVille)
+                        console.log(option)
                         lieuxSelect.append(option);
                         option.value="";
                         option.text="";
-                        lieuxSelect.append(option2);
+                        lieuxSelect.append(option);
+                        console.log(lieux)
                         $.each(lieux,function (key,lieu){
-                            option2.value=lieu.id;
-                            option2.text=lieu.nom+" " +lieu.rue;
+                            let option=document.createElement("option")
+                            option.value=lieu.id;
+                            option.text=lieu.nom+" " +lieu.rue;
+                            lieuxSelect.append(option);
+                            console.log(option)
                         })
                     }
                 });
@@ -73,8 +100,8 @@ Modifier une sortie
         }
         window.onload = ()=>{
             init();
+            // closeModal();
         }
     </script>
 
 {% endblock %}
-
