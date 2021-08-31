@@ -129,15 +129,18 @@ class SortieController extends AbstractController
 
         if ($sortie->getDateLimiteInscription() < new DateTime())
         {
-            $this->addFlash('notice', 'La date limite de inscription à la sortie '.$sortie->getNom().
+            $this->addFlash('fail', 'La date limite de inscription à la sortie '.$sortie->getNom().
                 ' est passé, désolé ! :(');
-        } else
+        } elseif ($sortie->getEtat()->getId() == 2)
         {
             $sortie->addParticipant($participant);
             $entityManager->persist($sortie);
             $entityManager->flush();
 
             $this->addFlash('success', 'Vous êtes désormais inscrit à la sortie '.$sortie->getNom().' !');
+        } else {
+            $this->addFlash('fail', "Oops, une erreur s'est produite lors de l'inscription :(");
+
         }
 
         return $this->render( 'sortie/inscrire.html.twig' , [

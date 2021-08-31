@@ -188,6 +188,7 @@ header {
 label{
     display: block;
     margin-right: 80px;
+    padding: 0.5em 0 0.5em 0;
     width: 80px;
 }
 input {
