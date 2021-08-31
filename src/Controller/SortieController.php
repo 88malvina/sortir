@@ -9,6 +9,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\CancelFormType;
 use App\Form\CreateSortieType;
+use App\Form\LieuType;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
@@ -32,6 +33,23 @@ class SortieController extends AbstractController
      */
     public function create(EntityManagerInterface $em,Request $request): Response
     {
+        //ajouter le lieu
+        $ajouterLieu=new Lieu();
+        //le formulaire (ajouter un lieu) est appelé
+        $ajouterLieuForm=$this->createForm(LieuType::class,$ajouterLieu);
+        $ajouterLieuForm->handleRequest($request);
+        if($ajouterLieuForm->isSubmitted() && $ajouterLieuForm->isValid()) {
+
+
+            $em->persist($ajouterLieu);
+            $em->flush();
+
+            $this->addFlash('success','Le lien à été ajouter!');
+            return $this->redirectToRoute('sortie_create');
+        }
+
+
+      //créer sortie
         $sortie=new Sortie();
         $user = $this->getUser();
         $etat = $this->getDoctrine()->getRepository(Etat::class)->find('1');
@@ -68,12 +86,22 @@ class SortieController extends AbstractController
             $em->persist($sortie);
             $em->flush();
 
-            $this->addFlash('success', 'La sortie a bien été créée.');
+            $this->addFlash('success',"La sortie a été créée!");
+            return $this->redirectToRoute('sortie_afficher',['id'=>$sortie->getId()]);
+
         }
         return $this->render('sortie/create.html.twig', [
             'controller_name' => 'SortieController',
-            'sortieCreationForm'=>$sortieCreationForm->createView()
+            'sortieCreationForm'=>$sortieCreationForm->createView(),
+            'ajouterLieuForm'=>$ajouterLieuForm->createView()
         ]);
+    }
+
+    /**
+     * @Route ("/ajouter", name="ajouter")
+     */
+    public function ajouterLieu(){
+        return $this->render('sortie/ajouterLieu.html.twig');
     }
 
     /**
@@ -183,7 +211,7 @@ class SortieController extends AbstractController
             $entityManager->persist($sortie);
             $entityManager->flush();
 
-            $this->addFlash('success', "La sortie ".$sortie->getNom().' a été annulée !');
+            $this->addFlash('success', "La sortie a été annulée ".$sortie->getNom().' !');
 
             return $this->redirectToRoute('main_home');
         }
@@ -232,7 +260,9 @@ class SortieController extends AbstractController
         //todo corriger ça xD
         elseif ($sortieModifierForm->isSubmitted() && $sortieModifierForm->isValid()) {
             $nom = $sortieModifierForm['nom']->getData();
-            $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();;
+            var_dump($nom);
+            $dateSortie = $sortieModifierForm->get('dateHeureDebut')->getData();
+            var_dump($dateSortie);
             $dateLimite=$sortieModifierForm->get('dateLimiteInscription')->getData();
             $nbPlace=$sortieModifierForm->get('nbInscriptionMax')->getData();
             $duree=$sortieModifierForm->get('duree')->getData();

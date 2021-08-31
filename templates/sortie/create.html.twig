@@ -6,6 +6,15 @@
 {% endblock %}
 
 {% block main %}
+
+    {% for label,messages in app.flashes%}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <h2>Créer une sortie</h2>
     <div class="flex">
     <div class="first">
@@ -20,24 +29,48 @@
     <div class="second">
         {{ form_row(sortieCreationForm.campus)}}
         {{ form_row(sortieCreationForm.ville)}}
-        {{ form_row(sortieCreationForm.lieu)}}
-        {{ form_row(sortieCreationForm.rue)}}
+       <div class="ajouter">{{ form_row(sortieCreationForm.lieu)}}
+       <a href="#modal"  data-toggle="modal" data-target="#modal"><img src="{{ asset('img/plus.png') }}" alt="ajouter un lieu"></a>
+        </div> {{ form_row(sortieCreationForm.rue)}}
         {{ form_row(sortieCreationForm.cp)}}
         {{ form_row(sortieCreationForm.latitude)}}
         {{ form_row(sortieCreationForm.longitude)}}
-    </div></div>
-    <button type="submit">Enregistrer</button>
+    </div>
+    </div>
+    <div class="formButtons">
+    <button type="">Enregistrer</button>
     <button type="reset">Annuler</button>
+    <button type="">Publier la sortie</button>
+    </div>
 
-        {# TODO fonctionnalité publier la sortie #}
-    <button>Publier la sortie</button>
     {{ form_end(sortieCreationForm) }}
+    <div id="modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Ajouter le lieu</h3>
+                    <a href="#close" title="Close" class="close">×</a>
+                    {{ form_start(ajouterLieuForm) }}
+                    {{ form_widget(ajouterLieuForm) }}<br>
+                    <button id="submit" type="submit">Ajouter</button>
+                    {{ form_end(ajouterLieuForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
+        function closeModal(){
+            let submit=document.getElementById("#submit");
+            console.log(submit);
+            submit.addEventListener("submit",function (){
+                submit.hidden;
+            });
+        }
         function init(){
             let ville = document.querySelector("#create_sortie_ville")
                  ville.addEventListener("change",function () {
@@ -54,15 +87,15 @@
                          },
                     success: function (lieux){
                                 lieuxSelect.innerHTML=""
-                             let option=document.createElement("option")
-                        let option2=document.createElement("option")
+                             // let option=document.createElement("option")
+                        let option=document.createElement("option")
                              lieuxSelect.append(option);
                         option.value="";
                         option.text="";
-                        lieuxSelect.append(option2);
+                        lieuxSelect.append(option);
                         $.each(lieux,function (key,lieu){
-                            option2.value=lieu.id;
-                            option2.text=lieu.nom+" " +lieu.rue;
+                            option.value=lieu.id;
+                            option.text=lieu.nom+" " +lieu.rue;
                         })
                     }
                      });
@@ -73,6 +106,7 @@
                     }
         window.onload = ()=>{
             init();
+            closeModal();
         }
     </script>
 

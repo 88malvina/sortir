@@ -93,7 +93,7 @@ class CreateSortieType extends AbstractType
             ])
         ->add('rue', TextType::class,[
         'mapped'=>false,
-        'label'=>'rue:',
+        'label'=>'Rue:',
             'required'=>false])
             ->add('cp', IntegerType::class,[
                 'mapped'=>false,
