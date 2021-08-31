@@ -90,24 +90,24 @@ class CreateSortieType extends AbstractType
                 'choice_label'=>'nom',
                 'label' => 'Lieu:',
                 'required' => false
-            ])
-        ->add('rue', TextType::class,[
-        'mapped'=>false,
-        'label'=>'Rue:',
-            'required'=>false])
-            ->add('cp', IntegerType::class,[
-                'mapped'=>false,
-                'label'=>'Code postale:',
-                'required'=>false
-                ])
-            ->add('latitude',IntegerType::class,[
-                'mapped'=>false,
-                'label'=>'Latitude:',
-                'required'=>false])
-                ->add('longitude',IntegerType::class,[
-                    'mapped'=>false,
-                    'label'=>'Longitude:',
-                    'required'=>false]);
+            ]);
+//        ->add('rue', TextType::class,[
+//        'mapped'=>false,
+//        'label'=>'Rue:',
+//            'required'=>false])
+//            ->add('cp', IntegerType::class,[
+//                'mapped'=>false,
+//                'label'=>'Code postale:',
+//                'required'=>false
+//                ])
+//            ->add('latitude',IntegerType::class,[
+//                'mapped'=>false,
+//                'label'=>'Latitude:',
+//                'required'=>false])
+//                ->add('longitude',IntegerType::class,[
+//                    'mapped'=>false,
+//                    'label'=>'Longitude:',
+//                    'required'=>false]);
 
         $formModifier = function (FormInterface $form, Ville $ville = null) {
             $lieux = null === $ville ? [] : $ville->getLieux();
