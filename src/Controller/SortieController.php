@@ -6,7 +6,6 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
-use App\Entity\Ville;
 use App\Form\CancelFormType;
 use App\Form\CreateSortieType;
 use App\Form\LieuType;
@@ -343,5 +342,36 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/publier/{id}", name="publier")
+     */
+    public function publier(int $id,
+                            SortieRepository $sortieRepository,
+                            UserInterface $user,
+                            ParticipantRepository $participantRepository,
+                            EtatRepository $etatRepository,
+                            EntityManagerInterface $entityManager) : Response
+    {
+        $sortie = $sortieRepository->findById($id);
+        $participant = $participantRepository->findByMail($user->getUsername());
+        $etatInitial = $sortie->getEtat();
 
+        $estOrganisateur = $participant->estOrganisateur($sortie);
+
+        if ($estOrganisateur && $etatInitial->getId() == 1)
+        {
+            $etatFinal = $etatRepository->find(2);
+            $sortie->setEtat($etatFinal);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie publié !');
+        } else {
+            $this->addFlash('fail', "Votre sortie n'as pas pu être publié !");
+        }
+
+        return $this->render('sortie/publier.html.twig',[
+            "sortie" => $sortie
+        ]);
+    }
 }

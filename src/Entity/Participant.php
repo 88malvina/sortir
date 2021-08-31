@@ -342,12 +342,12 @@ class Participant implements UserInterface
         return $estInscrit;
     }
 
-    public function estOrganisateur(?Sortie $sortie, ?Participant $participant): bool
+    public function estOrganisateur(?Sortie $sortie): bool
     {
         $estOrganisateur = false;
         $organisateur = $sortie->getOrganisateur();
 
-        if ($organisateur === $participant) {
+        if ($organisateur === $this) {
             $estOrganisateur = true;
         } else {
             $estOrganisateur = false;

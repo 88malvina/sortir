@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Sortie {{ sortie.nom }} | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <h1>Sortie {{ sortie.nom }}</h1>
+
+    {% include('inc/flashMessages.html.twig') %}
+
+    <a href="{{ path('main_home') }}"><button>Retour</button></a>
+{% endblock %}
+

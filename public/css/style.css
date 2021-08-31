@@ -16,6 +16,10 @@
     display: inline-flex;
 }
 
+.filtreSorties {
+    margin-bottom: 2em;
+}
+
 .centerText{
     text-align:center;
 }
