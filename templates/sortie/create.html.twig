@@ -73,7 +73,6 @@
         let visibility=false;
         function displayDiv(){
             let myDiv = document.querySelector("#faireApparaitre");
-            console.log(visibility);
             if(visibility===false){
             myDiv.style.visibility="visible";
             visibility=true;}
@@ -106,15 +105,20 @@
                          },
                     success: function (lieux){
                                 lieuxSelect.innerHTML=""
-                             // let option=document.createElement("option")
                         let option=document.createElement("option")
+                        console.log(selectedVille)
+                        console.log(option)
                              lieuxSelect.append(option);
                         option.value="";
                         option.text="";
                         lieuxSelect.append(option);
+                        console.log(lieux)
                         $.each(lieux,function (key,lieu){
+                            let option=document.createElement("option")
                             option.value=lieu.id;
                             option.text=lieu.nom+" " +lieu.rue;
+                            lieuxSelect.append(option);
+                            console.log(option)
                         })
                     }
                      });
