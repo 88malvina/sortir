@@ -2,7 +2,8 @@
 
 {% block title %}Sortir.com | Bienvenue !{% endblock %}
 {% block main %}
-
+    <p><strong>{{ "now"|date("m/d/Y") }}<br>
+    Participant: {{ participantNom }} {{ participantP }}.</strong></p>
 <div class="filtreSorties">
     {# todo mise en page #}
     {{ form_start(sortieForm) }}

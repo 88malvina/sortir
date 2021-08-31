@@ -46,6 +46,8 @@ class MainController extends AbstractController
 
         return $this->render('main/index.html.twig',[
             "sorties" => $sorties,
+            "participantNom"=>$participant->getNom(),
+            "participantP"=>$participant->getPrenom()[0],
             "sortieForm" => $sortieForm->createView(),
         ]);
 
