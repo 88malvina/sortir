@@ -206,9 +206,9 @@ class SortieController extends AbstractController
         //Nouvelle description = intègre motif d'annulation qui servira juste à l'archivage en base
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()){
-            //On dit que l'état 2 correspond à annuler
+            //On dit que l'état 6 correspond à annuler
             $etat = new Etat();
-            $etat = $etatRepository->find(2);
+            $etat = $etatRepository->find(6);
 
             $descriptionInitiale = $sortie->getInfosSortie();
             $motif = $cancelForm['motif']->getData();
@@ -318,8 +318,48 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/modifier.html.twig', [
             'sortieModifierForm'=>$sortieModifierForm->createView(),
-            'ajouterLieuForm'=>$ajouterLieuForm->createView()
+            'ajouterLieuForm'=>$ajouterLieuForm->createView(),
+            'sortie'=>$sortie
         ]);
+    }
+
+    /**
+     * @Route("/annulerSortieNonEncorePubliee/{id}", name="annulerSortieNonEncorePubliee")
+     */
+    public function annulerSortieNonEncorePubliee (int $id,
+                             EtatRepository $etatRepository,
+                             EntityManagerInterface $entityManager,
+                             UserInterface $user,
+                             ParticipantRepository $participantRepository,
+                             SortieRepository $sortieRepository,
+                             Request $request
+    ): Response
+
+    {
+        //d'abord on vérifie que la sortie est annulable, c'est à dire qu'elle n'est pas passée et que l'on est bien
+        //l'organisateur.
+        // todo Gérer ceci avec voter plus tard ?
+
+        //On récupère le participant
+        $participant = $participantRepository->findByMail($user->getUsername());
+        //On récupère la sortie grace a l'id
+        $sortie = $sortieRepository->findById($id);
+
+        //Si le formulaire cancelForm est ok on passe à l'action consistant à changer l'état de la sortie et sa description
+        //Nouvel état = annulé, donc ne s'affichera plus
+
+        //On va passer la sortie en annulee c'est à dire etat 6
+        $etat = new Etat();
+        $etat = $etatRepository->find(6);
+        $sortie->setEtat($etat);
+
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('success', "Cette sortie (n'était pas publiée) a été annulée ".$sortie->getNom().' !');
+
+        return $this->redirectToRoute('main_home');
+
     }
 
 
