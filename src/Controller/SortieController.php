@@ -194,12 +194,24 @@ class SortieController extends AbstractController
         //On veut que l'organisateur puisse annuler la sortie si celle-ci est bien annulable
         //Depuis le bouton dans la liste des sorties
 
-        //d'abord on vérifie que la sortie est annulable, c'est à dire qu'elle n'est pas passée et que l'on est bien
-        //l'organisateur.
+        //d'abord on vérifie que la sortie est annulable
+        //c'est à dire qu'elle n'est pas passée et que l'on est bien l'organisateur.
         // todo Gérer ceci avec voter plus tard ?
 
         $participant = $participantRepository->findByMail($user->getUsername());
         $sortie = $sortieRepository->findById($id);
+
+        //Comparaison du participant en cours avec l'organisateur de la sortie
+        if ($participant != $sortie->getOrganisateur()) {
+            $this->addFlash('fail', "Seul l'organisateur peut annuler cette sortie");
+            return $this->redirectToRoute('main_home');
+        }
+
+        // Les seuls états annulables sont 1 et 2
+        if ($sortie->getEtat()->getId() == (3 OR 4 OR 5 OR 6 )){
+            $this->addFlash('fail', "Cette sortie est".$sortie->getEtat()->getLibelle()."et ne peut donc pas être annulée");
+            return $this->redirectToRoute('main_home');
+        }
 
         //Si le formulaire cancelForm est ok on passe à l'action consistant à changer l'état de la sortie et sa description
         //Nouvel état = annulé, donc ne s'affichera plus
