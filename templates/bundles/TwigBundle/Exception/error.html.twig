@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accès nié | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <img src="{{ asset('img/oops.png') }}" alt="sad computer" width="250px">
+
+    <h3>Une erreur s'est produite, veuillez essayer encore une fois.</h3>
+
+{% endblock %}

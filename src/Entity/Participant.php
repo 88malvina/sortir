@@ -26,6 +26,8 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\Email(message="Veuillez renseigner un mail valide, s'il vous plaît.")
+     * @Assert\NotBlank(message="Veuillez renseigner votre mail, s'il vous plaît.")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -38,26 +40,43 @@ class Participant implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\Length (min=8, max=50,
+     *     minMessage="Votre mot de passe doit avoir au moins {{ limit }} caractères.",
+     *     maxMessage="Votre mot de passe doit avoir au maximum {{ limit }} caractères.")
      */
     private $password;
 
     /**
+     * @Assert\Length (min=2, max=50,
+     *                 minMessage="Votre nom doit avoir au moins {{ limit }} caractères.",
+     *                 maxMessage="Votre nom doit avoir au maximum {{ limit }} caractères.")
      * @Assert\NotBlank(message="Veuillez renseigner un nom, s'il vous plaît.")
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
-    /**
+    /**@Assert\Length (min=2, max=50,
+     *                 minMessage="Votre prenom doit avoir au moins {{ limit }} caractères.",
+     *                 maxMessage="Votre prenom doit avoir au maximum {{ limit }} caractères.")
+     * @Assert\NotBlank(message="Veuillez renseigner un prenom, s'il vous plaît.")
      * @ORM\Column(type="string", length=50)
      */
     private $prenom;
 
     /**
+     * @Assert\Length (min=4, max=50,
+     *                 minMessage="Votre pseudo doit avoir au moins {{ limit }} caractères.",
+     *                 maxMessage="Votre pseudo doit avoir au maximum {{ limit }} caractères.")
+     * @Assert\NotBlank(message="Veuillez renseigner un pseudo, s'il vous plaît.")
      * @ORM\Column(type="string", length=50, unique=true)
      */
     private $pseudo;
 
     /**
+     * @Assert\Length (min=10, max=10,
+     *                 minMessage="Votre téléphone doit avoir {{ limit }} caractères.",
+     *                 maxMessage="Votre téléphone doit avoir {{ limit }} caractères.")
+     * @Assert\NotBlank(message="Veuillez renseigner un telephone, s'il vous plaît.")
      * @ORM\Column(type="integer")
      */
     private $telephone;

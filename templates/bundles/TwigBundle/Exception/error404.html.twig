@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Page inexistante | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+        <img src="{{ asset('img/oops.png') }}" alt="sad computer" width="250px">
+
+        <h3>Oops ! La page que vous essayez d'y accéder n'a pas été trouvé.</h3>
+
+{% endblock %}

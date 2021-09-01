@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Accès nié | {{ parent() }}
+{% endblock %}
+
+{% block main %}
+    <img src="{{ asset('img/oops.png') }}" alt="sad computer" width="250px">
+
+    <h3>Désolé, vous n'avez pas la permission nécessaire pour réaliser cette action.</h3>
+
+{% endblock %}

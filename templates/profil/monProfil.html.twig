@@ -7,20 +7,20 @@
 
         <h2>Mon profil</h2>
         <div class="profil">
-        <div class="photoProfil">
-                {% if(avatar) %}
-                        <img src="{{ asset('uploads/'~avatar) }}" alt="avatar" width="250px">
-                {% else %}
-                        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" width="250px">
-                {% endif %}
-        </div>
-        {{ form_start(profilForm) }}
-        {{ form_widget(profilForm) }}
-        <br>
-        <button type="submit">Enregistrer</button>
-            {# to-do tester le button annuler #}
-        <button type="reset">Annuler</button>
-        {{ form_end(profilForm) }}
+            <div class="photoProfil">
+                    {% if(avatar) %}
+                            <img src="{{ asset('uploads/'~avatar) }}" alt="avatar" width="250px">
+                    {% else %}
+                            <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" width="250px">
+                    {% endif %}
+            </div>
+            {{ form_start(profilForm) }}
+                {{ form_widget(profilForm) }}
+            <br>
+                <br>
+                <button type="submit">Enregistrer</button>
+                <button type="reset" >Annuler</button>
+            {{ form_end(profilForm) }}
         </div>
 {% endblock %}
 

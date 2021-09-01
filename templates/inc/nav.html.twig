@@ -7,21 +7,20 @@
             </p>
         </div>
         <div>
-            {% if app.user %}
-                <p><a class="a_header" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
-
+            <p>
+                {% if is_granted('ROLE_USER') %}
+                    <a class="a_header" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a class="a_header" href="{{ path('villes_gerer') }}" title="Gérer les villes">Villes</a>
                         <a class="a_header" href="#" title="Gérer les campus">Campus</a>
                         <a class="a_header" href="{{ path('register') }}" title="Inscription">Inscrire</a>
                     {% endif %}
-
                     <a class="a_header" href="{{ path('profil_afficher', { 'id' : app.user.id }) }}" title="Gérer mes informations">Mon profil</a>
                     <a class="a_header" href="{{ path('logout') }}" title="Se déconnecter">Déconnexion</a>
-                    {% else %}
-                        <a class="a_header" href="{{ path('app_login') }}" title="Se connecter">Se connecter</a>
-                    {% endif %}
-                </p>
+                {% else %}
+                    <a class="a_header" href="{{ path('app_login') }}" title="Se connecter">Se connecter</a>
+                {% endif %}
+            </p>
         </div>
     </nav>
 </header>
