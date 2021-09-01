@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Gérer les villes
+{% endblock %}
+
+{% block main %}
+    <h2>Gérer les villes</h2>
+    <h3>Filtres les villes</h3>
+    <label for="titre">Le nom contient:</label><input name="titre" type="search">
+    <button type="submit">Rechercher</button>
+<table class="alter">
+    <tr>
+        <th class="thead-dark">Ville</th>
+        <th class="thead-dark">Code postale</th>
+        <th class="thead-dark">Actions</th>
+    </tr>
+    {% for ville in villes %}
+    <tr>
+        <th>{{ ville.nom }}</th>
+        <th>{{ ville.cp }}</th>
+        <th><a href="">Modifier</a> - <a href="">Supprimer</a></th>
+    </tr>{% endfor %}
+        <tr>
+            {{ form_start(filtrerVilleForm) }}
+            <th>{{ form_row(filtrerVilleForm.nom, { 'value': '' }) }}</th>
+            <th>{{ form_row(filtrerVilleForm.cp, { 'value': '' }) }}</th>
+
+            <th><button class="tbBut" type="submit">Ajouter</button></th>
+        </tr>{{ form_end(filtrerVilleForm) }}
+
+</table>
+{% endblock %}
+

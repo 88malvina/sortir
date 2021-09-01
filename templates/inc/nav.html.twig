@@ -11,7 +11,7 @@
                 <p><a class="a_header" href="{{ path('main_home') }}" title="Page d'accueil">Accueil</a>
 
                     {% if is_granted('ROLE_ADMIN') %}
-                        <a class="a_header" href="#" title="Gérer les villes">Villes</a>
+                        <a class="a_header" href="{{ path('villes_gerer') }}" title="Gérer les villes">Villes</a>
                         <a class="a_header" href="#" title="Gérer les campus">Campus</a>
                         <a class="a_header" href="{{ path('register') }}" title="Inscription">Inscrire</a>
                     {% endif %}

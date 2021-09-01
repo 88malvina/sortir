@@ -253,7 +253,11 @@ label {
     justify-content: space-between;
     /*margin: .5rem;*/
 }
-
+.tbBut{
+    background-color: lightgray;
+    color: black;
+    border: none;
+}
 .rememberMe {
     display: inline-block;
     text-align: center;

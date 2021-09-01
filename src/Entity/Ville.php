@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 //avec modification professeur
 /**
@@ -23,6 +24,7 @@ class Ville
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Please provide a valid name")
      * @ORM\Column(type="string", length=50)
      * @Groups({"list_villes","list_lieux"})
      *
@@ -30,6 +32,8 @@ class Ville
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Please provide a postal code")
+     * @Assert\Length(max=5,min=5, maxMessage="le code postale contien 5 chiffre")
      * @ORM\Column(type="integer")
      * @Groups({"list_villes"})
      */
