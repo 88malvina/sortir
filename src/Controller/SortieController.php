@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
@@ -88,7 +89,6 @@ class SortieController extends AbstractController
             $sortie->setLieu($lieu);
 
             //L'organisateur de la sortie est par défaut affecté en tant que participant
-            $participantSortie = new Participant();
             $participantSortie = $participantRepository->findByMail($user->getUsername());
             $sortie->addParticipant($participantSortie);
 
@@ -219,7 +219,6 @@ class SortieController extends AbstractController
 
         if ($cancelForm->isSubmitted() && $cancelForm->isValid()){
             //On dit que l'état 6 correspond à annuler
-            $etat = new Etat();
             $etat = $etatRepository->find(6);
 
             $descriptionInitiale = $sortie->getInfosSortie();
@@ -253,10 +252,7 @@ class SortieController extends AbstractController
      * @Route("/modifier/{id}", name="modifier")
      */
     public function modifier (int $id,
-                             EtatRepository $etatRepository,
                              EntityManagerInterface $em,
-                             UserInterface $user,
-                             ParticipantRepository $participantRepository,
                              SortieRepository $sortieRepository,
                              LieuRepository $lieuRepository,
                              Request $request
@@ -269,7 +265,6 @@ class SortieController extends AbstractController
     {
 
         //On commence par créer une nouvelle sortie qui va permettre de réinjecter les données
-        $sortie = new Sortie();
         //On hydrate la sortie avec les données de la sortie sur laquelle on est
         $sortie = $sortieRepository->findById($id);
         //On récupère l'user qui sera utile pour la verif à suivre
@@ -277,7 +272,6 @@ class SortieController extends AbstractController
 
         //----------------- gestion du formulaire de lieu-----------
         //D'abord on veut récupérer les infos du lieu de la sortie à modifier
-        $modifierLieu = new Lieu();
         //On hydrate le lieu avec le lieu renseigné avant
         $modifierLieu = $lieuRepository->find($sortie->getLieu()->getId());
         $ajouterLieuForm = $this->createForm(LieuType::class,$modifierLieu);
@@ -285,7 +279,7 @@ class SortieController extends AbstractController
 
         //On créé un formulaire de type create Form
         $sortieModifierForm = $this->createForm(CreateSortieType::class,$sortie);
-        //On oublie pas de faire le handleRequest
+        //On n'oublie pas de faire le handleRequest
         $sortieModifierForm->handleRequest($request);
 
         //Vérification que la personne qui modifie est bien l'organisateur
@@ -341,10 +335,7 @@ class SortieController extends AbstractController
     public function annulerSortieNonEncorePubliee (int $id,
                              EtatRepository $etatRepository,
                              EntityManagerInterface $entityManager,
-                             UserInterface $user,
-                             ParticipantRepository $participantRepository,
-                             SortieRepository $sortieRepository,
-                             Request $request
+                             SortieRepository $sortieRepository
     ): Response
 
     {
@@ -352,8 +343,6 @@ class SortieController extends AbstractController
         //l'organisateur.
         // todo Gérer ceci avec voter plus tard ?
 
-        //On récupère le participant
-        $participant = $participantRepository->findByMail($user->getUsername());
         //On récupère la sortie grace a l'id
         $sortie = $sortieRepository->findById($id);
 
@@ -361,7 +350,6 @@ class SortieController extends AbstractController
         //Nouvel état = annulé, donc ne s'affichera plus
 
         //On va passer la sortie en annulee c'est à dire etat 6
-        $etat = new Etat();
         $etat = $etatRepository->find(6);
         $sortie->setEtat($etat);
 
@@ -388,8 +376,11 @@ class SortieController extends AbstractController
      * @Route("/{id}", name="afficher")
      */
     public function afficher(int $id,
-                             SortieRepository $sortieRepository): Response
+                             SortieRepository $sortieRepository,
+                             Sortie $sortie): Response
     {
+        $this->denyAccessUnlessGranted('sortie_afficher', $sortie);
+
         $sortie = $sortieRepository->findById($id);
 
         return $this->render('sortie/details.html.twig',[

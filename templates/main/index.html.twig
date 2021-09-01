@@ -114,7 +114,12 @@
 
 
             {% else %}
-                <a href="{{ path('sortie_afficher', { 'id' : s.id }) }}" title="Details de la sortie">Afficher</a>
+
+                {# test voter #}
+                {% if is_granted('sortie_afficher', s) %}
+                    <a href="{{ path('sortie_afficher', { 'id' : s.id }) }}" title="Details de la sortie">Afficher</a>
+                {% endif %}
+
                 {% if app.user.estInscrit(s) %}
                     -
                     <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> Se désister</a>
