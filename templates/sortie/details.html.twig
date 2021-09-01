@@ -55,14 +55,37 @@
                 </tr>
                 <tr>
                     <td><i>Lieu : </i></td>
+                </tr>
+                <tr>
                     <td>{{ sortie.lieu.nom}} - {{ sortie.lieu.rue }} ({{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.cp }})</td>
                 </tr>
 
+
             </tbody>
         </table>
+
     </div>
+
+    <h3>Liste des participants inscrits : </h3>
+    <table>
+        <tr>
+            <th> pseudo </th>
+            <th> nom </th>
+        </tr>
+        {% for p in sortie.participants %}
+            <!--Pourquoi le tableau n'alternate pas ? -->
+            <tr id="alternate">
+                <td> {{ p.pseudo }}</td>
+                <td> {{ p.nom }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+
     <p>
-        <a href="{{ path('main_home') }}"><button>Retour</button></a> <a href="{{ path('profil_modifier') }}"><button>Modifier</button></a>
+        <a href="{{ path('main_home') }}"><button>Retour</button></a>
+        <!-- <a href="{{ path('sortie_modifier', {'id' : sortie.id }) }}" title="Modifier sortie">Modifier</a>
+        <a href="{{ path('profil_modifier') }}"><button>Modifier</button></a> -->
     </p>
 {% endblock %}
 
