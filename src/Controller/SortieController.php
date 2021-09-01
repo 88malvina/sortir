@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 
@@ -35,8 +34,10 @@ class SortieController extends AbstractController
     public function create(EntityManagerInterface $em,
                            Request $request,
                            ParticipantRepository $participantRepository
+
     ): Response
     {
+
         //ajouter le lieu
         $ajouterLieu=new Lieu();
         //le formulaire (ajouter un lieu) est appelé
@@ -100,6 +101,10 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('sortie_afficher',['id'=>$sortie->getId()]);
 
         }
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_create');
+
         return $this->render('sortie/create.html.twig', [
             'controller_name' => 'SortieController',
             'sortieCreationForm'=>$sortieCreationForm->createView(),
@@ -142,6 +147,9 @@ class SortieController extends AbstractController
             $this->addFlash('fail', "Oops, une erreur s'est produite lors de l'inscription :(");
 
         }
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_inscrire', $sortie);
 
         return $this->render( 'sortie/inscrire.html.twig' , [
             'sortie' => $sortie
@@ -379,6 +387,7 @@ class SortieController extends AbstractController
                              SortieRepository $sortieRepository,
                              Sortie $sortie): Response
     {
+        // voter
         $this->denyAccessUnlessGranted('sortie_afficher', $sortie);
 
         $sortie = $sortieRepository->findById($id);

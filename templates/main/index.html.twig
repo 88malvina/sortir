@@ -124,6 +124,8 @@
                     -
                     <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> Se désister</a>
                 {% else %}
+
+                    {# if(is_granted('sortie_inscrire', s)) #}
                     {% if not(s.nbInscriptionMax == s.participants|length)
                         and not(s.dateLimiteInscription < date())
                         and (s.etat.id == 2) %}
@@ -141,6 +143,8 @@
 
     </table>
 
-    <a href="{{ path('sortie_create') }}"><button>Créer une sortie</button></a>
+    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+        <a href="{{ path('sortie_create') }}"><button>Créer une sortie</button></a>
+    {% endif %}
 
 {% endblock %}
