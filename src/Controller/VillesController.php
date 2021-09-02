@@ -10,11 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-
+/**
+ * @Route ("/villes",name="villes_")
+ */
 class VillesController extends AbstractController
 {
 /**
- * @Route ("/villes",name="villes_gerer")
+ * @Route ("/villes",name="gerer")
  */
 
 public function gerer(Request $request, VilleRepository $villeRepository, EntityManagerInterface $em)
@@ -62,5 +64,6 @@ public function gerer(Request $request, VilleRepository $villeRepository, Entity
     ]);
 
 }
+
 
 }

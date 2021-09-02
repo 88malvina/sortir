@@ -29,7 +29,7 @@ class VilleRepository extends ServiceEntityRepository
         $ville=new Ville();
        $array = $this->createQueryBuilder('v')
             ->andWhere('v.nom LIKE :nom')
-            ->setParameter('nom', "{$value}%")
+            ->setParameter('nom', "%{$value}%")
             ->orderBy('v.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
@@ -44,12 +44,17 @@ class VilleRepository extends ServiceEntityRepository
     }
     public function findById($id)
     {
-
-        return $this->createQueryBuilder('v')
+        $ville=new Ville();
+        $array= $this->createQueryBuilder('v')
             ->andWhere('v.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
+
+        foreach ($array as $s){
+            $ville = $s;
+        }
+        return $ville;
     }
 
     /*
