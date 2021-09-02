@@ -59,6 +59,7 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
     /**
      * @return Participant Returns un Participant
      */
+    //participant by id
     public function findById($id) : Participant
     {
         $participant = new Participant();

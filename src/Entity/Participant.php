@@ -65,16 +65,16 @@ class Participant implements UserInterface
     private $prenom;
 
     /**
-     * @Assert\Length (min=4, max=50,
+     * @Assert\Length (min=3, max=50,
      *                 minMessage="Votre pseudo doit avoir au moins {{ limit }} caractères.",
      *                 maxMessage="Votre pseudo doit avoir au maximum {{ limit }} caractères.")
      * @Assert\NotBlank(message="Veuillez renseigner un pseudo, s'il vous plaît.")
      * @ORM\Column(type="string", length=50, unique=true)
      */
     private $pseudo;
-
+//@Assert\Regex(pattern="/^[0-9]*$/", message="number_only")
     /**
-     * @Assert\Length (min=10, max=10,
+     * @Assert\Length (min=9, max=10,
      *                 minMessage="Votre téléphone doit avoir {{ limit }} caractères.",
      *                 maxMessage="Votre téléphone doit avoir {{ limit }} caractères.")
      * @Assert\NotBlank(message="Veuillez renseigner un telephone, s'il vous plaît.")

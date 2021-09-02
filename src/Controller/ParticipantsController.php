@@ -16,6 +16,7 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/liste", name="afficher")
      */
+    //on affiche la liste des participants
     public function afficherLaListeDesParticipants(ParticipantRepository $participantRepository){
         $participant=new Participant();
         $participants=$this->getDoctrine()->getRepository(Participant::class)->findAll();
@@ -27,6 +28,7 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/liste/desactiver/{id}", name="desactiver")
      */
+    //désactiver le participant en lui transférant la valeur de l'actif 0
     public function DesactiverParticipants(int $id,ParticipantRepository $participantRepository,EntityManagerInterface $em){
         $participant=$this->getDoctrine()->getRepository(Participant::class)->findById($id);
         $actif=0;
@@ -38,6 +40,7 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/liste/activer/{id}", name="activer")
      */
+    //activer le participant en lui transférant la valeur de l'actif 1
     public function activerParticipants(int $id,ParticipantRepository $participantRepository,EntityManagerInterface $em){
         $participant=$this->getDoctrine()->getRepository(Participant::class)->findById($id);
         $actif=1;
@@ -50,6 +53,7 @@ class ParticipantsController extends AbstractController
     /**
      * @Route("/liste/supprimer/{id}", name="supprimer")
      */
+    //supprimer le participant
     public function supprimerParticipants(int $id,ParticipantRepository $participantRepository,EntityManagerInterface $em){
         $participant=$this->getDoctrine()->getRepository(Participant::class)->findById($id);
         $em->remove($participant);
