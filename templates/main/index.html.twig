@@ -2,36 +2,46 @@
 
 {% block title %}Sortir.com | Bienvenue !{% endblock %}
 {% block main %}
-    <p><strong>{{ "now"|date("d/m/Y") }}<br>
-    Participant : {{ participantNom }} {{ participantP }}.</strong></p>
-<div class="filtreSorties">
-    {# todo mise en page #}
-    {{ form_start(sortieForm) }}
-    <h2> Filtrer les sorties </h2>
-    <div class="filtreSorties1">
 
-        {{ form_row(sortieForm.campus) }}
-        {{ form_row(sortieForm.nom) }}
-        {{ form_row(sortieForm.dateHeureDebut) }} {{ form_row(sortieForm.dateLimiteInscription) }}
+    <p class="centerText">
+        <strong>
+            {{ "now"|date("d/m/Y") }}<br>
+            Participant : {{ participantNom }} {{ participantP }}.
+        </strong>
+    </p>
+
+    <h2 class="centerText" style="background-color: white"> Filtrer les sorties </h2>
+
+    <div class="filtreSorties" style="align-items: center">
+        {# todo mise en page #}
+
+
+        {{ form_start(sortieForm) }}
+
+        <div class="filtreSorties1">
+
+            {{ form_row(sortieForm.campus) }}
+            {{ form_row(sortieForm.nom) }}
+            {{ form_row(sortieForm.dateHeureDebut) }} {{ form_row(sortieForm.dateLimiteInscription) }}
+        </div>
+
+        <div class="filtreSorties2" style="flex: 1" >
+            {{ form_row(sortieForm.jeSuisInscrit) }}
+            {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
+            {{ form_row(sortieForm.jeSuisOrganisateur) }}
+            {{ form_row(sortieForm.sortiePassee) }}
+        </div>
+
+        <div>
+            <button type="submit">Filtrer</button>
+            <button type="reset">Annuler</button>
+        </div>
+
+        {{ form_end(sortieForm) }}
     </div>
 
-    <div>
-        {{ form_row(sortieForm.jeSuisInscrit) }}
-        {{ form_row(sortieForm.jeNeSuisPasInscrit) }}
-        {{ form_row(sortieForm.jeSuisOrganisateur) }}
-        {{ form_row(sortieForm.sortiePassee) }}
-    </div>
 
-    <div>
-        <button type="submit">Filtrer</button>
-        <button type="reset">Annuler</button>
-    </div>
-
-    {{ form_end(sortieForm) }}
-</div>
-
-
-<h2> Liste des sorties </h2>
+<h2 class="centerText" style="background-color: white"> Liste des sorties </h2>
 
     <!-- C'est géré dans le controller :
     Soit on affiche toutes les sorties, soit si le filtre a été soumis on affiche la selection
