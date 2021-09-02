@@ -43,7 +43,10 @@
             </tr>
             <tr>
                 <td><a href="{{ path('main_home') }}"><button>Retour</button></a></td>
+                {% if participant.id==app.user.id %}
                 <td><a href="{{ path('profil_modifier') }}"><button>Modifier</button></a></td>
+                {% endif %}
+
             </tr>
             </tbody>
         </table>
