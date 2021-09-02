@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<h4>List des participants</h4>
+
+    <table class="alter">
+        <tr>
+            <th class="thead-dark">Participant</th>
+            <th class="thead-dark">Etat</th>
+            <th class="thead-dark">Actions</th>
+        </tr>
+        {% for participant in participants %}
+            <tr>
+                <th>{{ participant.pseudo }}</th>
+                {% if participant.actif == 1 %}
+                <th>Actif</th>
+
+                {% else %}
+                    <th>Désactivé</th>
+                {% endif %}
+                {% if participant.actif == 1 %}
+                    <th><a href="">Désactivér</a> - <a href="">Supprimer</a></th>
+                    {% else %}
+                        <th><a href="">Activer</a> - <a href="">Supprimer</a></th>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

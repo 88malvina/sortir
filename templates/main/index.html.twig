@@ -152,7 +152,9 @@
     {% endfor %}
 
     </table>
-
+    {% if is_granted('ROLE_ADMIN')%}
+        <a href="{{ path('participants_afficher') }}">Liste des participants</a>
+    {% endif %}
     {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
         <a href="{{ path('sortie_create') }}"><button>Créer une sortie</button></a>
     {% endif %}
