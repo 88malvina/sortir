@@ -41,6 +41,7 @@ class MainController extends AbstractController
         $sorties = $sortieRepository->findByParameters($sortieRecherche);
 
 
+
         //Pour l'affichage de toutes les sorties, on passe au twig la liste des sorties
         //On passe aussi le formulaire (sans oublier le create view)
 

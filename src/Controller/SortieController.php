@@ -50,7 +50,8 @@ class SortieController extends AbstractController
             $em->persist($ajouterLieu);
             $em->flush();
 
-            $this->addFlash('success','Le lien à été ajouter!');
+            $this->addFlash('success','Le lieu à été ajouté !');
+            // TODO enlever redirect
             return $this->redirectToRoute('sortie_create');
         }
 
@@ -70,6 +71,7 @@ class SortieController extends AbstractController
             $info=$sortieCreationForm->get('infosSortie')->getData();
             $campus=$user->getCampus();
             $villeForm=$sortieCreationForm->get('ville')->getData();
+            //$lieuForm = $sortieCreationForm->get('lieu')->getData();
             $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
 //            $rue=$sortieCreationForm->get('rue')->getData();
 //            $cp=$sortieCreationForm->get('cp')+->getData();
@@ -103,7 +105,7 @@ class SortieController extends AbstractController
         }
 
         // voter
-        $this->denyAccessUnlessGranted('sortie_create');
+        //$this->denyAccessUnlessGranted('sortie_create');
 
         return $this->render('sortie/create.html.twig', [
             'controller_name' => 'SortieController',
@@ -132,6 +134,9 @@ class SortieController extends AbstractController
         $participant = $participantRepository->findByMail($user->getUsername());
         $sortie = $sortieRepository->findById($id);
 
+        // voter
+        $this->denyAccessUnlessGranted('sortie_inscrire', $sortie);
+
         if ($sortie->getDateLimiteInscription() < new DateTime())
         {
             $this->addFlash('fail', 'La date limite de inscription à la sortie '.$sortie->getNom().
@@ -148,8 +153,6 @@ class SortieController extends AbstractController
 
         }
 
-        // voter
-        $this->denyAccessUnlessGranted('sortie_inscrire', $sortie);
 
         return $this->render( 'sortie/inscrire.html.twig' , [
             'sortie' => $sortie

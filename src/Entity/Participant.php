@@ -55,7 +55,8 @@ class Participant implements UserInterface
      */
     private $nom;
 
-    /**@Assert\Length (min=2, max=50,
+    /**
+     * @Assert\Length (min=2, max=50,
      *                 minMessage="Votre prenom doit avoir au moins {{ limit }} caractères.",
      *                 maxMessage="Votre prenom doit avoir au maximum {{ limit }} caractères.")
      * @Assert\NotBlank(message="Veuillez renseigner un prenom, s'il vous plaît.")

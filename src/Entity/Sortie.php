@@ -37,11 +37,13 @@ class Sortie
     private $dateLimiteInscription;
 
     /**
+     * @Assert\Range(min="15", max="90")
      * @ORM\Column(type="integer")
      */
     private $duree;
 
     /**
+     * @Assert\Range(min="2", max="30")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;

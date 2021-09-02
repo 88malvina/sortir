@@ -91,6 +91,11 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
+        // tester si c'est la premiere connexion (mdp par default : Passw0rd)
+        /*if($request->request->get('password') == "Passw0rd"){
+            return new RedirectResponse($this->urlGenerator->generate('profil_modifier'));
+        }*/
+
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\RegistrationFormType;
 use App\Security\AppAuthenticator;
+use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,10 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $user->setRoles(["ROLE_USER"]);
+            $user->setAdministrateur(false);
+            $user->setActif(true);
 
             // encode the plain password
             $user->setPassword(
@@ -35,20 +39,25 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setAdministrateur(false);
-            $user->setActif(true);
-
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
             // do anything else you need here, like send an email
 
+            /*
+             * login automathique au register
+             *
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
                 $request,
                 $authenticator,
                 'main' // firewall name in security.yaml
-            );
+            ); */
+
+            $this->addFlash('success', 'Le participant a bien été crée.');
+
+            return $this->redirectToRoute('register');
         }
 
         return $this->render('registration/register.html.twig', [

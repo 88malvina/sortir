@@ -102,10 +102,11 @@ class SortieRepository extends ServiceEntityRepository
 
 
         //On considère que l'état 5 est "passé"
+        $date = new \DateTime();
         if (!empty($sortieSearch->getSortiePassee())) {
             $query = $query
-                ->andWhere('s.etat = :etat')
-                ->setParameter('etat', 5);
+                ->andWhere('s.dateHeureDebut <= :date')
+                ->setParameter('date', $date);
         }
 
         return $query->getQuery()->getResult();

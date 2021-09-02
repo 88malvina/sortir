@@ -4,6 +4,8 @@ namespace App\Security\Voter;
 
 use App\Entity\Sortie;
 use DateTime;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -17,9 +19,17 @@ class SortieVoter extends Voter
 
     private $security;
 
-    public function __construct(Security $security)
+    // pour les flash si necessaire
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(Security $security, ContainerInterface $container)
     {
+
         $this->security = $security;
+        $this->container = $container;
     }
 
     /**
@@ -64,10 +74,14 @@ class SortieVoter extends Voter
      */
     private function canAfficher(Sortie $sortie): bool
     {
+        // add flash
+        // $this->container->get('session')->getFlashBag()->add('success','blabla');
+
         // vérifie si la sortie est annulée (etat id 6) ou créée ()
         $etat = $sortie->getEtat();
         if ($etat->getId() == 6 || $etat->getId() == 1)
         {
+
             return false;
         }
         else
