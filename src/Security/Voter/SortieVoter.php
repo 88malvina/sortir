@@ -2,10 +2,9 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use DateTime;
-use Symfony\Component\DependencyInjection\Container;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -16,36 +15,37 @@ class SortieVoter extends Voter
     // constantes METHODE = "route"
     const AFFICHER = "sortie_afficher";
     const INSCRIRE = "sortie_inscrire";
+    const DESISTER = "sortie_desister";
+    const PUBLIER = "sortie_publier";
 
     private $security;
 
     // pour les flash si necessaire
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    ///**
+    // * @var ContainerInterface
+    // */
+    //private $container;
 
-    public function __construct(Security $security, ContainerInterface $container)
+    public function __construct(Security $security)
     {
-
         $this->security = $security;
-        $this->container = $container;
+        // $this->container = $container;
     }
 
     /**
      * @inheritDoc
      */
-    protected function supports(string $attribute, $subject)
+    protected function supports(string $attribute, $subject): bool
     {
         // ajouter la constante au array (self::NOMCONST)
-        return in_array($attribute, [self::AFFICHER, self::INSCRIRE])
+        return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER])
             && $subject instanceof Sortie;
     }
 
     /**
      * @inheritDoc
      */
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 
@@ -62,6 +62,8 @@ class SortieVoter extends Voter
                 return $this->canAfficher($sortie);
             case self::INSCRIRE:
                 return $this->canInscrire($sortie);
+            case self::DESISTER:
+                return $this->canDesister($sortie, $user);
         }
 
         return false;
@@ -90,11 +92,9 @@ class SortieVoter extends Voter
         }
     }
 
-    /*----- en passant 3 paramètres, j'ai eu 2 conflits différents :
-    /------ avec la fonction is_granted($role, $object = null, string $field = null) dans twig
-    //----- et denyAccessUnlessGranted($attribute, $subject = null, string $message = 'Access Denied.') dans le controller
-    */
+
     /**
+     * Vérifie s'il est possible de s'inscrire à la sortie
      * @param Sortie $sortie
      * @return bool
      */
@@ -113,6 +113,21 @@ class SortieVoter extends Voter
         {
             return false;
         }
+    }
+
+    /**
+     * Vérifie s'il est possible de se désister de la sortie
+     * @param Sortie $sortie
+     * @param Participant $participant
+     * @return bool
+     */
+    private function canDesister(Sortie $sortie, Participant $participant): bool
+    {
+        $dateDebut = $sortie->getDateHeureDebut();
+        $datetime = new DateTime();
+        $clotureInscr = $sortie->getDateLimiteInscription();
+
+        return $participant->estInscrit($sortie) && $datetime < $clotureInscr && $datetime < $dateDebut;
     }
 
 

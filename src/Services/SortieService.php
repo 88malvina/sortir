@@ -26,6 +26,14 @@ class SortieService
         $dateDebutSortie = $sortie->getDateHeureDebut();
         $isComplete = $sortie->getParticipants()->count() == $sortie->getNbInscriptionMax();
 
+        // ouvrir les sorties quand une place se libère
+        if (!$isComplete && $oldEtatId == self::CLOTUREE && $dateLimiteInsc > $date) {
+            $newEtat = $etatRepository->find(self::OUVERTE);
+            $sortie->setEtat($newEtat);
+            $manager->persist($sortie);
+            $manager->flush();
+        }
+
         // clôturer les sorties
         if(($dateLimiteInsc < $date || $isComplete) && $oldEtatId == self::OUVERTE)
         {
@@ -34,8 +42,6 @@ class SortieService
             $manager->persist($sortie);
             $manager->flush();
         }
-
-
 
         // sorties passées
         if($dateDebutSortie<$date && $oldEtatId == self::CLOTUREE)
