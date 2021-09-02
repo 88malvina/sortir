@@ -50,7 +50,7 @@ class SortieController extends AbstractController
             $em->persist($ajouterLieu);
             $em->flush();
 
-            $this->addFlash('success','Le lieu à été ajouté !');
+            $this->addFlash('success','Le lieu a été ajouté !');
             // TODO enlever redirect
             return $this->redirectToRoute('sortie_create');
         }
@@ -165,9 +165,11 @@ class SortieController extends AbstractController
                               ParticipantRepository $participantRepository,
                               SortieRepository $sortieRepository): Response
     {
-
         $participant = $participantRepository->findByMail($user->getUsername());
         $sortie = $sortieRepository->findById($id);
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_desister', $sortie);
 
         $sortie->removeParticipant($participant);
         $entityManager->persist($sortie);
@@ -408,11 +410,13 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->findById($id);
         $participant = $participantRepository->findByMail($user->getUsername());
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_desister', $sortie);
+
         $etatInitial = $sortie->getEtat();
 
-        $estOrganisateur = $participant->estOrganisateur($sortie);
-
-        if ($estOrganisateur && $etatInitial->getId() == 1)
+        if ($participant->estOrganisateur($sortie) && $etatInitial->getId() == 1)
         {
             $etatFinal = $etatRepository->find(2);
             $sortie->setEtat($etatFinal);

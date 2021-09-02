@@ -107,17 +107,18 @@
         <td id="actionSortie">
             {% if app.user == s.organisateur %}
                 <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
-                {% if s.etat.id == 1 %}
+                {% if is_granted('sortie_publier', s) %}
                     -
                     <a href="{{ path('sortie_publier', {'id': s.id }) }}" title="Publier sortie">Publier</a>
                 {% endif %}
-                -
             <!-- Si la sortie est en état 1 on peut annuler direct, si c'est état 2 il faudra un motif-->
                 {% if s.etat.id == 1 %}
+                    -
                     <a href=" {{ path('sortie_annulerSortieNonEncorePubliee', {'id' : s.id }) }}" title="Annuler sortie">Supprimer brouillon</a>
                 {% endif %}
 
                 {% if s.etat.id == 2 %}
+                    -
                     <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Supprimer sortie </a>
                 {% endif %}
 
@@ -130,15 +131,12 @@
                     <a href="{{ path('sortie_afficher', { 'id' : s.id }) }}" title="Details de la sortie">Afficher</a>
                 {% endif %}
 
-                {% if app.user.estInscrit(s) %}
+                {% if is_granted('sortie_desister', s) %}
                     -
                     <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> Se désister</a>
                 {% else %}
 
-                    {# if(is_granted('sortie_inscrire', s)) #}
-                    {% if not(s.nbInscriptionMax == s.participants|length)
-                        and not(s.dateLimiteInscription < date())
-                        and (s.etat.id == 2) %}
+                    {% if(is_granted('sortie_inscrire', s)) %}
                         -
                         <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> S'inscrire</a>
                     {% endif %}
