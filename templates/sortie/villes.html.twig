@@ -5,30 +5,49 @@
 {% endblock %}
 
 {% block main %}
+
+    {% for label,messages in app.flashes%}
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
     <h2>Gérer les villes</h2>
     <h3>Filtres les villes</h3>
-    <label for="titre">Le nom contient:</label><input name="titre" type="search">
-    <button type="submit">Rechercher</button>
+    {{ form_start(chercherVilleForm) }}
+    {{ form_widget(chercherVilleForm) }}
+    <th><button class="tbBut" type="submit">Rechercher</button></th>
+    {{ form_end(chercherVilleForm) }}
 <table class="alter">
     <tr>
         <th class="thead-dark">Ville</th>
         <th class="thead-dark">Code postale</th>
         <th class="thead-dark">Actions</th>
     </tr>
+
     {% for ville in villes %}
     <tr>
         <th>{{ ville.nom }}</th>
         <th>{{ ville.cp }}</th>
         <th><a href="">Modifier</a> - <a href="">Supprimer</a></th>
-    </tr>{% endfor %}
+    </tr>
+    {% endfor %}
         <tr>
-            {{ form_start(filtrerVilleForm) }}
-            <th>{{ form_row(filtrerVilleForm.nom, { 'value': '' }) }}</th>
-            <th>{{ form_row(filtrerVilleForm.cp, { 'value': '' }) }}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            {{ form_start(ajouterVilleForm) }}
+            <th>{{ form_row(ajouterVilleForm.nom, { 'value': '' }) }}</th>
+            <th>{{ form_row(ajouterVilleForm.cp, { 'value': '' }) }}</th>
 
             <th><button class="tbBut" type="submit">Ajouter</button></th>
-        </tr>{{ form_end(filtrerVilleForm) }}
+        </tr>{{ form_end(ajouterVilleForm) }}
 
 </table>
 {% endblock %}
+
 

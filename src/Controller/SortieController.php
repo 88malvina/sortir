@@ -73,10 +73,6 @@ class SortieController extends AbstractController
             $villeForm=$sortieCreationForm->get('ville')->getData();
             //$lieuForm = $sortieCreationForm->get('lieu')->getData();
             $lieu = $this->getDoctrine()->getRepository(Lieu::class)->find($villeForm->getId());
-//            $rue=$sortieCreationForm->get('rue')->getData();
-//            $cp=$sortieCreationForm->get('cp')+->getData();
-//            $latitude=$sortieCreationForm->get('latitude')->getData();
-//            $longitude=$sortieCreationForm->get('longitude')->getData();
             $idOrganisateur= $this->getDoctrine()->getRepository(Participant::class)->find($user);
 
 

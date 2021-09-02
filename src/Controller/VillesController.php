@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ville;
+use App\Form\AjouterVilleType;
 use App\Form\FiltreVilleType;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,31 +20,47 @@ class VillesController extends AbstractController
 public function gerer(Request $request, VilleRepository $villeRepository, EntityManagerInterface $em)
 {
     $ville = new Ville();
-    $filtrerVilleForm = $this->createForm(FiltreVilleType::class, $ville);
-    $filtrerVilleForm->handleRequest($request);
+    $chercherVilleForm = $this->createForm(FiltreVilleType::class, $ville);
+    $chercherVilleForm->handleRequest($request);
+
+    $ajouterVilleForm = $this->createForm(AjouterVilleType::class, $ville);
+    $ajouterVilleForm->handleRequest($request);
 
     $villes = $villeRepository->findAll();
-
-    if($filtrerVilleForm->isSubmitted() && $filtrerVilleForm->isValid()){
+    if ($ajouterVilleForm->isSubmitted() && $ajouterVilleForm->isValid()) {
 
         $em->persist($ville);
         $em->flush();
+
+        $this->addFlash('success', 'La ville à été ajouter!');
         return $this->redirectToRoute('villes_gerer');
 
     }
+    if($chercherVilleForm->isSubmitted() && $chercherVilleForm->isValid()){
+        if(!empty($chercherVilleForm->get('nomSearch')->getData())){
+            $villes =$villeRepository->findByNom($chercherVilleForm->get('nomSearch')->getData());
+//            dd($villes);
+        }
+        else{
+            $villes=$villeRepository->findAll();
+        }
+
+
+        return $this->render('sortie/villes.html.twig', [
+
+            'ajouterVilleForm' => $ajouterVilleForm->createView(),
+            'villes' => $villes,
+            'chercherVilleForm' => $chercherVilleForm->createView(),
+            ]);
+    }
 
     return $this->render('sortie/villes.html.twig', [
-        'filtrerVilleForm' => $filtrerVilleForm->createView(),
+
+        'ajouterVilleForm' => $ajouterVilleForm->createView(),
+        'chercherVilleForm' => $chercherVilleForm->createView(),
         'villes' => $villes
     ]);
-}
-/**
- * @Route ("/villes",name="villes_ajoute")
- */
-public function ajouter(VilleRepository $villeRepository, EntityManagerInterface $em){
 
-    return $this->render('sortie/villes.html.twig', [
-
-    ]);
 }
+
 }

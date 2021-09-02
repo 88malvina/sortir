@@ -46,7 +46,7 @@ class ProfilController extends AbstractController
         if($profilForm->isSubmitted() && $profilForm->isValid()) {
             $uploadedFile = $profilForm->get('image')->getData();
             $pseudo = $profilForm->get('pseudo')->getData();
-            $prenom = $profilForm->get('prenom')->getData();
+            $prenom = $profilForm->get('prenom')->getData();dump($prenom);
             $nom = $profilForm->get('nom')->getData();
             $telephone = $profilForm->get('telephone')->getData();
             $email = $profilForm->get('email')->getData();
@@ -75,6 +75,7 @@ class ProfilController extends AbstractController
             $participant->setEmail($email);
             $participant->setPassword($newUncodPassword);
             $participant->setCampus($campus);
+            $em->persist($participant);
             $em->flush();
 
             $this->addFlash('success', 'Votre profil a été modifié.');
