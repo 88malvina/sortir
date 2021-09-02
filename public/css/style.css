@@ -122,8 +122,10 @@ body {
     margin: auto;
     padding: 35px;
 }
-
-
+.container p{
+    width: 100%;
+    text-align: left;
+}
 #detailSortie > div > ul > li {
     list-style: none;
     margin-bottom: 0.5em;

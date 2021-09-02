@@ -63,7 +63,6 @@ class ProfilController extends AbstractController
                 $uploadedFile->move(
                     $this->getParameter('images_directory'),
                     $newFilename);
-                //to-do sauvegarder les modifications dans la base de donnée
                 $participant->setImage($newFilename);
 
                 $em->flush();

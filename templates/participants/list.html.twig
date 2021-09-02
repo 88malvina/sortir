@@ -13,17 +13,16 @@
             <tr>
                 <th>{{ participant.pseudo }}</th>
                 {% if participant.actif == 1 %}
-                <th>Actif</th>
+                    <th>Actif</th>
 
                 {% else %}
                     <th>Désactivé</th>
                 {% endif %}
                 {% if participant.actif == 1 %}
-                    <th><a href="">Désactivér</a> - <a href="">Supprimer</a></th>
+                    <th><a href="{{ path('participants_desactiver',{'id':participant.id}) }}">Désactivér</a> - <a href="{{ path('participants_supprimer',{'id':participant.id}) }}">Supprimer</a></th>
                     {% else %}
-                        <th><a href="">Activer</a> - <a href="">Supprimer</a></th>
+                        <th><a href="{{ path('participants_activer',{'id':participant.id}) }}">Activer</a> - <a href="{{ path('participants_supprimer',{'id':participant.id}) }}">Supprimer</a></th>
                 {% endif %}
-
             </tr>
         {% endfor %}
     </table>
