@@ -3,8 +3,11 @@
 namespace App\Controller;
 use App\Form\FiltrerSortiesType;
 use App\Modele\SortieSearch;
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
+use App\Services\SortieService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,10 +20,14 @@ class MainController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @throws \Exception
      */
     public function index(Request $request,
                           SortieRepository $sortieRepository,
-                          ParticipantRepository $participantRepository): Response
+                          EtatRepository $etatRepository,
+                          EntityManagerInterface $entityManager,
+                          ParticipantRepository $participantRepository,
+                          SortieService $sortieService): Response
     {
         //---------------------- Gestion du formulaire --------------
         //creation d'une instance de notre entite sortieSearch, qui est une classe indé dans Modele
@@ -40,7 +47,10 @@ class MainController extends AbstractController
 
         $sorties = $sortieRepository->findByParameters($sortieRecherche);
 
-
+        foreach ($sorties as $s)
+        {
+            $sortieService->verifEtat($s, $etatRepository, $entityManager);
+        }
 
         //Pour l'affichage de toutes les sorties, on passe au twig la liste des sorties
         //On passe aussi le formulaire (sans oublier le create view)
