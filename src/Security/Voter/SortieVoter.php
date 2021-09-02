@@ -2,7 +2,6 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use DateTime;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -38,7 +37,7 @@ class SortieVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         // ajouter la constante au array (self::NOMCONST)
-        return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER])
+        return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER, self::PUBLIER])
             && $subject instanceof Sortie;
     }
 
@@ -56,7 +55,7 @@ class SortieVoter extends Voter
 
         $sortie = $subject;
 
-        // il faut créer une fonction et l'appeller dans un nouveau 'case'
+        // il faut créer une fonction et l'appeller dans un nouveau 'case' avec les paramètres nécessaires
         switch ($attribute) {
             case self::AFFICHER:
                 return $this->canAfficher($sortie);
@@ -64,6 +63,8 @@ class SortieVoter extends Voter
                 return $this->canInscrire($sortie);
             case self::DESISTER:
                 return $this->canDesister($sortie, $user);
+            case self::PUBLIER:
+                return $this->canPublier($sortie, $user);
         }
 
         return false;
@@ -103,7 +104,7 @@ class SortieVoter extends Voter
         $datetime = new DateTime();
 
         if (($this->security->isGranted('ROLE_USER') || $this->security->isGranted('ROLE_ADMIN'))
-            && $sortie->getEtat()->getId() === 2
+            && $sortie->getEtat()->getId() === 2 // id des sorties ouvertes
             && $sortie->getDateLimiteInscription() > $datetime
             && $sortie->getNbInscriptionMax() > $sortie->getParticipants()->count())
         {
@@ -116,18 +117,27 @@ class SortieVoter extends Voter
     }
 
     /**
-     * Vérifie s'il est possible de se désister de la sortie
+     * Vérifie si le participant est inscrit à la sortie et si la date de clôture n'est pas passée
      * @param Sortie $sortie
-     * @param Participant $participant
+     * @param UserInterface $user
      * @return bool
      */
-    private function canDesister(Sortie $sortie, Participant $participant): bool
+    private function canDesister(Sortie $sortie, UserInterface $user): bool
     {
         $dateDebut = $sortie->getDateHeureDebut();
         $datetime = new DateTime();
+        $dateLimiteInscription = $sortie->getDateLimiteInscription();
+
+        return $user->estInscrit($sortie) && $datetime<$dateLimiteInscription && $datetime<$dateDebut;
+    }
+
+    private function canPublier(Sortie $sortie, UserInterface $user): bool
+    {
+        $datetime = new DateTime();
         $clotureInscr = $sortie->getDateLimiteInscription();
 
-        return $participant->estInscrit($sortie) && $datetime < $clotureInscr && $datetime < $dateDebut;
+        return $user->estOrganisateur($sortie) && $datetime<$clotureInscr
+            && $sortie->getEtat()->getId()==1; // id des sorties crées
     }
 
 

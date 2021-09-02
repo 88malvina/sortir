@@ -410,11 +410,13 @@ class SortieController extends AbstractController
     {
         $sortie = $sortieRepository->findById($id);
         $participant = $participantRepository->findByMail($user->getUsername());
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_desister', $sortie);
+
         $etatInitial = $sortie->getEtat();
 
-        $estOrganisateur = $participant->estOrganisateur($sortie);
-
-        if ($estOrganisateur && $etatInitial->getId() == 1)
+        if ($participant->estOrganisateur($sortie) && $etatInitial->getId() == 1)
         {
             $etatFinal = $etatRepository->find(2);
             $sortie->setEtat($etatFinal);

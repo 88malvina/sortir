@@ -107,7 +107,7 @@
         <td id="actionSortie">
             {% if app.user == s.organisateur %}
                 <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
-                {% if s.etat.id == 1 %}
+                {% if is_granted('sortie_publier', s) %}
                     -
                     <a href="{{ path('sortie_publier', {'id': s.id }) }}" title="Publier sortie">Publier</a>
                 {% endif %}
@@ -135,10 +135,7 @@
                     <a href="{{ path('sortie_desister', { 'id' : s.id }) }}" title="Se désister"> Se désister</a>
                 {% else %}
 
-                    {# if(is_granted('sortie_inscrire', s)) #}
-                    {% if not(s.nbInscriptionMax == s.participants|length)
-                        and not(s.dateLimiteInscription < date())
-                        and (s.etat.id == 2) %}
+                    {% if(is_granted('sortie_inscrire', s)) %}
                         -
                         <a href="{{ path('sortie_inscrire', { 'id' : s.id }) }}" title="S'inscrire"> S'inscrire</a>
                     {% endif %}
