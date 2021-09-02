@@ -8,30 +8,12 @@
     padding: 0 0 0.1em 0.1em;
 }
 
-.filtreSorties1 > h2{
+.filtreSorties1 > h2 , div{
     color: #592659;
     flex-direction: column;
-    margin: 2em;
+    margin: 0;
+    padding-right: 1em;
     display: inline-flex;
-
-}
-
-.filtreSorties2 > div {
-    margin-right: 1em;
-    flex-wrap: nowrap;
-    display: flex;
-    flex-direction: row;
-    margin: 2em;
-}
-
-.filtreSorties2 label {
-    white-space: nowrap;
-}
-
-form[name="filtrer_sorties"]{
-    display: flex;
-    align-items: center
-;
 }
 
 .filtreSorties {
