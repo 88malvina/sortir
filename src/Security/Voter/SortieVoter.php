@@ -79,7 +79,7 @@ class SortieVoter extends Voter
 
         // vérifie si la sortie est annulée (etat id 6) ou créée ()
         $etat = $sortie->getEtat();
-        if ($etat->getId() == 6 || $etat->getId() == 1)
+        if ($etat->getId() == 6)
         {
 
             return false;
