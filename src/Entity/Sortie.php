@@ -31,6 +31,7 @@ class Sortie
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
+     * @Assert\GreaterThan("today",message="La sortie ne peut pas commencer avant la date du jour actuel")
      */
     public $dateHeureDebut;
 
