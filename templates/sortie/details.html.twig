@@ -5,13 +5,9 @@
 {% endblock %}
 
 {% block main %}
-    {% for label,messages in app.flashes%}
-        {% for message in messages %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-            {% endfor %}
-{% endfor %}
+
+    {% include('inc/flashMessages.html.twig') %}
+
     <h2>{{ sortie.nom }} | {{ sortie.etat.libelle }}</h2>
 
     <div id="detailSortie">

@@ -16,6 +16,8 @@ class SortieVoter extends Voter
     const INSCRIRE = "sortie_inscrire";
     const DESISTER = "sortie_desister";
     const PUBLIER = "sortie_publier";
+    const ANNULER = "sortie_annuler";
+    const MODIFIER = "sortie_modifier";
 
     private $security;
 
@@ -37,7 +39,8 @@ class SortieVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         // ajouter la constante au array (self::NOMCONST)
-        return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER, self::PUBLIER])
+        return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER,
+                self::PUBLIER, self::ANNULER, self::MODIFIER])
             && $subject instanceof Sortie;
     }
 
@@ -65,6 +68,10 @@ class SortieVoter extends Voter
                 return $this->canDesister($sortie, $user);
             case self::PUBLIER:
                 return $this->canPublier($sortie, $user);
+            case self::ANNULER:
+                return $this->canAnnuler($sortie, $user);
+            case self::MODIFIER:
+                return $this->canModifier($sortie, $user);
         }
 
         return false;
@@ -138,6 +145,23 @@ class SortieVoter extends Voter
 
         return $user->estOrganisateur($sortie) && $datetime<$clotureInscr
             && $sortie->getEtat()->getId()==1; // id des sorties crées
+    }
+
+    private function canAnnuler(Sortie $sortie, UserInterface $user)
+    {
+        $datetime = new DateTime();
+        $dateLimiteInscription = $sortie->getDateLimiteInscription();
+        $oldEtatId = $sortie->getEtat()->getId();
+
+        return $oldEtatId==1 || $oldEtatId==2 // sortie crée ou ouverte
+            && $user->estOrganisateur($sortie)
+            && $datetime<$dateLimiteInscription;
+    }
+
+    private function canModifier(Sortie $sortie, UserInterface $user)
+    {
+        return $user->estOrganisateur($sortie)
+            && $sortie->getEtat()->getId()==1;
     }
 
 

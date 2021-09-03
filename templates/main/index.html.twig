@@ -10,6 +10,8 @@
         </strong>
     </p>
 
+    {% include('inc/flashMessages.html.twig') %}
+
     <h2 class="centerText"> Filtrer les sorties </h2>
 
     <div class="filtreSorties" style="align-items: center">
@@ -106,9 +108,11 @@
 
         <td id="actionSortie">
             {% if app.user == s.organisateur %}
-                <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
-                {% if is_granted('sortie_publier', s) %}
+                {% if is_granted('sortie_modifier', s) %}
+                    <a href="{{ path('sortie_modifier', {'id' : s.id }) }}" title="Modifier sortie">Modifier</a>
                     -
+                {% endif %}
+                {% if is_granted('sortie_publier', s) %}
                     <a href="{{ path('sortie_publier', {'id': s.id }) }}" title="Publier sortie">Publier</a>
                 {% endif %}
             <!-- Si la sortie est en état 1 on peut annuler direct, si c'est état 2 il faudra un motif-->
@@ -117,9 +121,8 @@
                     <a href=" {{ path('sortie_annulerSortieNonEncorePubliee', {'id' : s.id }) }}" title="Annuler sortie">Supprimer brouillon</a>
                 {% endif %}
 
-                {% if s.etat.id == 2 %}
-                    -
-                    <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Supprimer sortie </a>
+                {% if is_granted('sortie_annuler', s) %}
+                    <a href=" {{ path('sortie_annuler', {'id' : s.id }) }}" title="Annuler sortie">Supprimer sortie</a>
                 {% endif %}
 
 

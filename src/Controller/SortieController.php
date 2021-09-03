@@ -210,6 +210,9 @@ class SortieController extends AbstractController
         $participant = $participantRepository->findByMail($user->getUsername());
         $sortie = $sortieRepository->findById($id);
 
+        // voter
+        $this->denyAccessUnlessGranted('sortie_annuler', $sortie);
+
         //Comparaison du participant en cours avec l'organisateur de la sortie
         if ($participant != $sortie->getOrganisateur()) {
             $this->addFlash('fail', "Seul l'organisateur peut annuler cette sortie");
@@ -276,6 +279,11 @@ class SortieController extends AbstractController
         //On commence par créer une nouvelle sortie qui va permettre de réinjecter les données
         //On hydrate la sortie avec les données de la sortie sur laquelle on est
         $sortie = $sortieRepository->findById($id);
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_modifier', $sortie);
+
+
         //On récupère l'user qui sera utile pour la verif à suivre
         $user = $this->getUser();//-----------------
 
