@@ -18,6 +18,7 @@ class SortieVoter extends Voter
     const PUBLIER = "sortie_publier";
     const ANNULER = "sortie_annuler";
     const MODIFIER = "sortie_modifier";
+    const SUPP_BROUILLON = "sortie_annulerSortieNonEncorePubliee";
 
     private $security;
 
@@ -40,7 +41,7 @@ class SortieVoter extends Voter
     {
         // ajouter la constante au array (self::NOMCONST)
         return in_array($attribute, [self::AFFICHER, self::INSCRIRE, self::DESISTER,
-                self::PUBLIER, self::ANNULER, self::MODIFIER])
+                self::PUBLIER, self::ANNULER, self::MODIFIER, self::SUPP_BROUILLON])
             && $subject instanceof Sortie;
     }
 
@@ -72,6 +73,8 @@ class SortieVoter extends Voter
                 return $this->canAnnuler($sortie, $user);
             case self::MODIFIER:
                 return $this->canModifier($sortie, $user);
+            case self::SUPP_BROUILLON:
+                return $this->canSuppBrouillon($sortie, $user);
         }
 
         return false;
@@ -91,7 +94,6 @@ class SortieVoter extends Voter
         $etat = $sortie->getEtat();
         if ($etat->getId() == 6)
         {
-
             return false;
         }
         else
@@ -154,7 +156,7 @@ class SortieVoter extends Voter
         $oldEtatId = $sortie->getEtat()->getId();
 
         return $oldEtatId==1 || $oldEtatId==2 // sortie crée ou ouverte
-            && $user->estOrganisateur($sortie)
+            && $this->security->isGranted('ROLE_ADMIN') || $user->estOrganisateur($sortie)
             && $datetime<$dateLimiteInscription;
     }
 
@@ -162,6 +164,11 @@ class SortieVoter extends Voter
     {
         return $user->estOrganisateur($sortie)
             && $sortie->getEtat()->getId()==1;
+    }
+
+    private function canSuppBrouillon(Sortie $sortie, UserInterface $user)
+    {
+        return $user->estOrganisateur($sortie) && $sortie->getEtat()->getId()==1;
     }
 
 

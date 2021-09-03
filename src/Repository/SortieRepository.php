@@ -49,7 +49,7 @@ class SortieRepository extends ServiceEntityRepository
 
         //On ne veut que les états 2,3,4,5, on fait le filtre en php avant la query
         $query = $query
-            ->andWhere('e.id = 1 OR e.id =2 OR e.id =3 OR e.id =4 OR e.id =5 OR e.id =6');
+            ->andWhere('e.id = 1 OR e.id =2 OR e.id =3 OR e.id =4 OR e.id =5');
 
         //pour chercher un bout de nom on laisse les % donc ok
         if (!empty($sortieSearch->getNom())) {

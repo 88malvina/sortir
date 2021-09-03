@@ -18,6 +18,9 @@ class ParticipantsController extends AbstractController
      */
     //on affiche la liste des participants
     public function afficherLaListeDesParticipants(ParticipantRepository $participantRepository){
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $participant=new Participant();
         $participants=$this->getDoctrine()->getRepository(Participant::class)->findAll();
 //        $participants=$this->$participantRepository->findAll();
@@ -58,6 +61,6 @@ class ParticipantsController extends AbstractController
         $participant=$this->getDoctrine()->getRepository(Participant::class)->findById($id);
         $em->remove($participant);
         $em->flush();
-        return $this->afficherLaListeDesParticipants($participantRepository);;
+        return $this->afficherLaListeDesParticipants($participantRepository);
     }
 }

@@ -19,7 +19,7 @@
                     <th>Désactivé</th>
                 {% endif %}
                 {% if participant.actif == 1 %}
-                    <th><a href="{{ path('participants_desactiver',{'id':participant.id}) }}">Désactivér</a> - <a href="{{ path('participants_supprimer',{'id':participant.id}) }}">Supprimer</a></th>
+                    <th><a href="{{ path('participants_desactiver',{'id':participant.id}) }}">Désactiver</a> - <a href="{{ path('participants_supprimer',{'id':participant.id}) }}">Supprimer</a></th>
                     {% else %}
                         <th><a href="{{ path('participants_activer',{'id':participant.id}) }}">Activer</a> - <a href="{{ path('participants_supprimer',{'id':participant.id}) }}">Supprimer</a></th>
                 {% endif %}

@@ -55,12 +55,18 @@
                 <tr>
                     <td>{{ sortie.lieu.nom}} - {{ sortie.lieu.rue }} ({{ sortie.lieu.ville.nom }} {{ sortie.lieu.ville.cp }})</td>
                 </tr>
-
-
             </tbody>
         </table>
-
     </div>
+    <div>
+        <p>
+            <a href="{{ path('main_home') }}"><button>Retour</button></a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('sortie_annuler', {'id' : sortie.id }) }}" title="Modifier sortie"><button>Annuler sortie</button></a>
+            {% endif %}
+        </p>
+    </div>
+
 
     <h3>Liste des participants inscrits : </h3>
     <table>
@@ -78,10 +84,5 @@
         {% endfor %}
     </table>
 
-    <p>
-        <a href="{{ path('main_home') }}"><button>Retour</button></a>
-        <!-- <a href="{{ path('sortie_modifier', {'id' : sortie.id }) }}" title="Modifier sortie">Modifier</a>
-        <a href="{{ path('profil_modifier') }}"><button>Modifier</button></a> -->
-    </p>
 {% endblock %}
 

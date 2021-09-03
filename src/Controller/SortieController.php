@@ -214,7 +214,7 @@ class SortieController extends AbstractController
         $this->denyAccessUnlessGranted('sortie_annuler', $sortie);
 
         //Comparaison du participant en cours avec l'organisateur de la sortie
-        if ($participant != $sortie->getOrganisateur()) {
+        if (!$participant->estOrganisateur($sortie) && !$this->isGranted('ROLE_ADMIN')) {
             $this->addFlash('fail', "Seul l'organisateur peut annuler cette sortie");
             return $this->redirectToRoute('main_home');
         }
@@ -362,6 +362,10 @@ class SortieController extends AbstractController
 
         //On récupère la sortie grace a l'id
         $sortie = $sortieRepository->findById($id);
+
+        // voter
+        $this->denyAccessUnlessGranted('sortie_annulerSortieNonEncorePubliee', $sortie);
+
 
         //Si le formulaire cancelForm est ok on passe à l'action consistant à changer l'état de la sortie et sa description
         //Nouvel état = annulé, donc ne s'affichera plus
