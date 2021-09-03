@@ -32,17 +32,19 @@ class Sortie
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
      */
-    private $dateHeureDebut;
+    public $dateHeureDebut;
 
     /**
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank
+     * @Assert\Expression("value < this.dateHeureDebut", message="La date limite inscription ne peut pas être après la date de sortie")
      */
     private $dateLimiteInscription;
 
     /**
      * @Assert\Range(min="15", max="90")
      * @ORM\Column(type="integer")
+     *
      */
     private $duree;
 
