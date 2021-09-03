@@ -217,7 +217,7 @@ class SortieController extends AbstractController
         }
 
         // Les seuls états annulables sont 1 et 2
-        if ($sortie->getEtat()->getId() == (3 OR 4 OR 5 OR 6 )){
+        if (($sortie->getEtat()->getId()) != 1 && ($sortie->getEtat()->getId()) != 2){
             $this->addFlash('fail', "Cette sortie est".$sortie->getEtat()->getLibelle()."et ne peut donc pas être annulée");
             return $this->redirectToRoute('main_home');
         }
