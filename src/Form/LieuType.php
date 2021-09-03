@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LieuType extends AbstractType
 {
+    //lieux
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

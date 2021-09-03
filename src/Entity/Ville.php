@@ -24,7 +24,7 @@ class Ville
     private $id;
 
     /**
-     *
+     * @Assert\Length(max={50})
      * @ORM\Column(type="string", length=50)
      * @Groups({"list_villes","list_lieux"})
      *
