@@ -61,7 +61,7 @@
     <div>
         <p>
             <a href="{{ path('main_home') }}"><button>Retour</button></a>
-            {% if is_granted('ROLE_ADMIN') %}
+            {% if is_granted('sortie_annuler', sortie) %}
                 <a href="{{ path('sortie_annuler', {'id' : sortie.id }) }}" title="Modifier sortie"><button>Annuler sortie</button></a>
             {% endif %}
         </p>

@@ -41,9 +41,7 @@ class MainController extends AbstractController
         $sortieForm = $this->createForm(FiltrerSortiesType::class, $sortieRecherche);
 
         //On pense à faire le handle request, pour cela on pense à passer la request en argument de fonction
-        dump($sortieForm);
         $sortieForm->handleRequest($request);
-        dump($sortieForm);
 
         $sorties = $sortieRepository->findByParameters($sortieRecherche);
 

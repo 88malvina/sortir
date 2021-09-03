@@ -23,7 +23,8 @@ class Lieu
      */
     private $id;
 
-    /**@Assert\Length(max={255})
+    /**
+     * @Assert\Length(max={255})
      * @ORM\Column(type="string", length=255)
      * @Groups({"list_lieux"})
      */

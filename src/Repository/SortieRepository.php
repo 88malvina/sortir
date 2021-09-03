@@ -36,11 +36,6 @@ class SortieRepository extends ServiceEntityRepository
 
         //On commence par récupérer une variable qui retourne le jour du mois dernier
         $lastmonth = date('Y-m-d', strtotime('-1month'));
-        dump("lastmonth");
-        dump($lastmonth);
-        dump("heure debut");
-        dump($sortieSearch->getDateHeureDebut());
-
         //on veut virer les vieilles sorties pourries par défaut (sans utiliser le form) donc on a besoin de la date
         //des sorties
         $query = $query

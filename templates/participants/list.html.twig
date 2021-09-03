@@ -11,7 +11,11 @@
         </tr>
         {% for participant in participants %}
             <tr>
-                <th>{{ participant.pseudo }}</th>
+                <th>
+                    <a href="{{ path('profil_afficher', { 'id' : participant.id }) }}" title="Organisateur">
+                        {{ participant.pseudo }}
+                    </a>
+                </th>
                 {% if participant.actif == 1 %}
                     <th>Actif</th>
 

@@ -21,7 +21,7 @@ class ApiLieuxController extends AbstractController
     public function listOfLieux(LieuRepository $lieuRepository,SerializerInterface $serializer,Request $request){
         $lieux=$lieuRepository->listOfLieuxByVille($request);
         $json = $serializer->serialize($lieux,'json',['groups'=>"list_lieux"]);
-        return new JsonResponse($json,Response::HTTP_OK,[],true);
+        return new JsonResponse($json,Response::HTTP_OK,['Access-Control-Allow-Origin'=>"*"],true);
     }
 
 }
