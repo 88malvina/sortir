@@ -23,16 +23,20 @@ class Sortie
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
+     * @Assert\Length(min=5,max=255)
      */
     private $nom;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
      */
     private $dateHeureDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
      */
     private $dateLimiteInscription;
 
