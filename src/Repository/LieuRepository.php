@@ -20,7 +20,6 @@ class LieuRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Lieu::class);
     }
-//les villes
     public function listOfLieuxByVille(Request $request)
     {
 

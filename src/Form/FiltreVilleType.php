@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FiltreVilleType extends AbstractType
-{//filtrer
+{
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

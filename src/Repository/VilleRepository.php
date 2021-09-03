@@ -21,7 +21,7 @@ class VilleRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return Ville[] Returns an array of Ville object
+    //  * @return Ville[] Returns an array of Ville objects
     //  */
 
     public function findByNom($value)

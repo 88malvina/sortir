@@ -21,7 +21,7 @@ class VillesController extends AbstractController
 
 public function gerer(Request $request, VilleRepository $villeRepository, EntityManagerInterface $em)
 {
-    //villesController
+
     $ville = new Ville();
     $chercherVilleForm = $this->createForm(FiltreVilleType::class, $ville);
     $chercherVilleForm->handleRequest($request);
